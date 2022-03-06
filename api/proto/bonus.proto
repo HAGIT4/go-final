@@ -8,7 +8,48 @@ message RegisterRequest {
     string password = 2;
 }
 
-message RegisterResponse {}
+message RegisterResponse {
+    enum Status {
+        INVALID = 0;
+        OK = 1;
+        LOGIN_IN_USE = 2;
+        INTERNAL_SERVEL_ERROR = 3;
+    }
+}
+
+message UploadOrderRequest {
+    int64 order = 1;
+}
+
+message UploadOrderResponse {
+    enum Status {
+        INVALID = 0;
+        OK = 1;
+        ALREADY_UPLOADED_BY_THIS_USER = 2;
+        BAD_REQUEST = 3;
+        UNAUTHORIZED = 4;
+        ALREADY_UPLOADED_BY_ANOTHER_USER = 5;
+        BAD_ORDER_NUMBER = 6;
+        INTERNAL_SERVER_ERROR = 7;
+    }
+}
+
+message GetOrderListRequest {}
+
+message OrderInfo {
+    
+}
+
+message GetOrderListResponse {
+    enum Status {
+        INVALID = 0;
+        OK = 1;
+        NO_DATA = 2;
+        UNAUTHORIZED = 3;
+        INTERNAL_SERVER_ERROR = 4;
+    }
+
+}
 
 service BonusService {
     rpc Register (RegisterRequest) returns (RegisterResponse) {

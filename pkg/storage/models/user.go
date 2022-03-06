@@ -1,10 +1,19 @@
 package models
 
-type AddUserRequest struct {
+type User struct {
 	Username   string
 	PasswdHash string
 }
 
-type GetUserByUsernameRequest struct{}
+type AddUserRequest struct {
+	User
+}
 
-type GetUserByUsernameResponse struct{}
+type GetUserByUsernameRequest struct {
+	Username string
+}
+
+type GetUserByUsernameResponse struct {
+	User
+	Found bool
+}

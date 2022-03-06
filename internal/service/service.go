@@ -5,15 +5,22 @@ import (
 	pkgService "github.com/HAGIT4/go-final/pkg/service"
 )
 
+const (
+	bcryptCost int = 8
+)
+
 type BonusService struct {
-	storage storage.BonusStorageInterface
+	storage     storage.BonusStorageInterface
+	authService *authService
 }
 
 var _ BonusServiceInterface = (*BonusService)(nil)
 
 func NewBonusService(cfg *pkgService.BonusServiceConfig) (sv *BonusService, err error) {
+	asv := NewAuthService()
 	sv = &BonusService{
-		storage: cfg.Storage,
+		storage:     cfg.Storage,
+		authService: asv,
 	}
 	return sv, nil
 }

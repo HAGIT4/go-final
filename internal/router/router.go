@@ -15,7 +15,9 @@ var _ bonusRouterInterface = (*bonusRouter)(nil)
 func NewBonusRouter(cfg *routerCfg.BonusRouterConfig) (r *bonusRouter, err error) {
 	mux := gin.Default()
 	apiUserGroup := mux.Group("api/user")
-	routes.AddRegisterRoutes(apiUserGroup, cfg.Service)
+	routes.AddUserRoutes(apiUserGroup, cfg.Service)
+	routes.AddOrdersRoutes(apiUserGroup, cfg.Service)
+	routes.AddBalanceRoutes(apiUserGroup, cfg.Service)
 
 	r = &bonusRouter{
 		mux: mux,

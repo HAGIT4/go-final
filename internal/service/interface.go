@@ -5,5 +5,6 @@ import (
 )
 
 type BonusServiceInterface interface {
-	Register(req pkgService.RegisterRequest) (resp pkgService.RegisterResponse, err error)
+	Register(req pkgService.RegisterRequest) (resp *pkgService.RegisterResponse, err error)
+	UploadOrder()
 }

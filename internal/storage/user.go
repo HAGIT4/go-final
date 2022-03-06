@@ -18,3 +18,26 @@ func (st *BonusStorage) AddUser(req *storageModels.AddUserRequest) (err error) {
 	}
 	return nil
 }
+
+func (st *BonusStorage) GetUserByUsername(req *storageModels.GetUserByUsernameRequest) (resp *storageModels.GetUserByUsernameResponse, err error) {
+	resp = &storageModels.GetUserByUsernameResponse{}
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	sqlResult, err := st.connection.Query(ctx, "SELECT * FROM user WHERE username=$1",
+		req.Username,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer sqlResult.Close()
+
+	var userId int64
+	for sqlResult.Next() {
+		if err = sqlResult.Scan(&userId, &resp.Username, &resp.PasswdHash); err != nil {
+			return nil, err
+		}
+	}
+	resp.Found = true
+	return resp, nil
+}

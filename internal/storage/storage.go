@@ -28,7 +28,7 @@ func NewBonusStorage(cfg *pkgStorage.BonusStorageConfig) (st *BonusStorage, err 
 		return nil, err
 	}
 
-	_, err = conn.Exec(ctx, "CREATE TABLE IF NOT EXISTS user (id SERIAL PRIMARY KEY, username TEXT, passwdHash)")
+	_, err = conn.Exec(ctx, "CREATE TABLE IF NOT EXISTS user (id SERIAL PRIMARY KEY, username TEXT, passwdHash)") // add unique
 	if err != nil {
 		return nil, err
 	}

@@ -7,7 +7,8 @@ import (
 )
 
 type bonusRouter struct {
-	mux *gin.Engine
+	address string
+	mux     *gin.Engine
 }
 
 var _ BonusRouterInterface = (*bonusRouter)(nil)
@@ -20,7 +21,15 @@ func NewBonusRouter(cfg *routerCfg.BonusRouterConfig) (r *bonusRouter, err error
 	routes.AddBalanceRoutes(apiUserGroup, cfg.Service)
 
 	r = &bonusRouter{
-		mux: mux,
+		address: cfg.Address,
+		mux:     mux,
 	}
 	return r, nil
+}
+
+func (rt *bonusRouter) Run() (err error) {
+	if err = rt.mux.Run(rt.address); err != nil {
+		return err
+	}
+	return nil
 }

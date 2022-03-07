@@ -1,6 +1,11 @@
 package api
 
 import (
+	"log"
+	"os"
+	"os/signal"
+	"syscall"
+
 	router "github.com/HAGIT4/go-final/internal/router"
 	service "github.com/HAGIT4/go-final/internal/service"
 	storage "github.com/HAGIT4/go-final/internal/storage"
@@ -35,6 +40,7 @@ func NewBonusServer(cfg *pkgApi.APIConfig) (bs *bonusServer, err error) {
 	}
 
 	rtCfg := &pkgRouter.BonusRouterConfig{
+		Address: cfg.RunAddress,
 		Service: sv,
 	}
 	rt, err := router.NewBonusRouter(rtCfg)
@@ -48,4 +54,17 @@ func NewBonusServer(cfg *pkgApi.APIConfig) (bs *bonusServer, err error) {
 		storage: st,
 	}
 	return bs, nil
+}
+
+func (bs *bonusServer) ListenAndServe() (err error) {
+	go func() {
+		if err := bs.router.Run(); err != nil {
+			log.Fatal(err) // user errgroup
+		}
+	}()
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT)
+	<-quit
+	log.Println("Server shutdown...")
+	return nil
 }

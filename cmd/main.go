@@ -16,5 +16,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	if err := bonusServer.ListenAndServe(); err != nil {
+		log.Fatal(err)
+	}
 }

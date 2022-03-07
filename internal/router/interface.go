@@ -1,3 +1,5 @@
 package router
 
-type BonusRouterInterface interface{}
+type BonusRouterInterface interface {
+	Run() (err error)
+}

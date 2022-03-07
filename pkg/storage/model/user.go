@@ -1,4 +1,4 @@
-package models
+package model
 
 type User struct {
 	Username   string
@@ -16,4 +16,13 @@ type GetUserByUsernameRequest struct {
 type GetUserByUsernameResponse struct {
 	User
 	Found bool
+}
+
+type GetUserIdByUsernameRequest struct {
+	Username string
+}
+
+type GetUserIdByUsernameResponse struct {
+	UserId int
+	Found  bool
 }

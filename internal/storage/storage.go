@@ -42,6 +42,33 @@ func NewBonusStorage(cfg *pkgStorage.BonusStorageConfig) (st *BonusStorage, err 
 		return nil, err
 	}
 
+	_, err = conn.Exec(ctx, `CREATE TABLE IF NOT EXISTS bonus.balance (
+		id SERIAL PRIMARY KEY,
+		current INTEGER,
+		withdrawn INTEGER
+	)`)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = conn.Exec(ctx, `CREATE TYPE order_status as ENUM ('NEW', 'PROCESSING', 'INVALID', 'PROCESSED');
+		CREATE TABLE IF NOT EXISTS bonus.order (
+		id SERIAL PRIMARY KEY,
+		number INTEGER UNIQUE,
+		status order_status,
+		uploaded_at TIMESTAMPZ
+	)`)
+
+	_, err = conn.Exec(ctx, `CREATE TABLE IF NOT EXISTS bonus.withdrawal (
+		id SERIAL PRIMARY KEY,
+		order INTEGER UNIQUE,
+		sum INTEGER,
+		processed_at TIMESTAMPZ
+	`)
+	if err != nil {
+		return nil, err
+	}
+
 	st = &BonusStorage{
 		connectionString: cfg.ConnectionString,
 		connection:       conn,

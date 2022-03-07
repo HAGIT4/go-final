@@ -2,12 +2,12 @@ package service
 
 import (
 	pkgService "github.com/HAGIT4/go-final/pkg/service"
-	modelsStorage "github.com/HAGIT4/go-final/pkg/storage/models"
+	modelStorage "github.com/HAGIT4/go-final/pkg/storage/model"
 	"golang.org/x/crypto/bcrypt"
 )
 
 func (sv *BonusService) Register(req pkgService.RegisterRequest) (resp *pkgService.RegisterResponse, err error) {
-	dbReq := &modelsStorage.GetUserByUsernameRequest{
+	dbReq := &modelStorage.GetUserByUsernameRequest{
 		Username: req.Login,
 	}
 	userInDB, err := sv.storage.GetUserByUsername(dbReq)
@@ -22,8 +22,8 @@ func (sv *BonusService) Register(req pkgService.RegisterRequest) (resp *pkgServi
 	if err != nil {
 		return nil, err
 	}
-	dbAddReq := &modelsStorage.AddUserRequest{
-		User: modelsStorage.User{
+	dbAddReq := &modelStorage.AddUserRequest{
+		User: modelStorage.User{
 			Username:   req.Login,
 			PasswdHash: string(passwdHash),
 		},

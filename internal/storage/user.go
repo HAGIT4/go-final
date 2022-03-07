@@ -3,10 +3,10 @@ package storage
 import (
 	"context"
 
-	storageModels "github.com/HAGIT4/go-final/pkg/storage/models"
+	modelStorage "github.com/HAGIT4/go-final/pkg/storage/model"
 )
 
-func (st *BonusStorage) AddUser(req *storageModels.AddUserRequest) (err error) {
+func (st *BonusStorage) AddUser(req *modelStorage.AddUserRequest) (err error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
@@ -19,8 +19,8 @@ func (st *BonusStorage) AddUser(req *storageModels.AddUserRequest) (err error) {
 	return nil
 }
 
-func (st *BonusStorage) GetUserByUsername(req *storageModels.GetUserByUsernameRequest) (resp *storageModels.GetUserByUsernameResponse, err error) {
-	resp = &storageModels.GetUserByUsernameResponse{}
+func (st *BonusStorage) GetUserByUsername(req *modelStorage.GetUserByUsernameRequest) (resp *modelStorage.GetUserByUsernameResponse, err error) {
+	resp = &modelStorage.GetUserByUsernameResponse{}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 

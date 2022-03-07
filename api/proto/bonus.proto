@@ -79,7 +79,9 @@ message GetOrderListResponse {
 }
 
 // Get user balance
-message GetUserBalanceRequest {}
+message GetUserBalanceRequest {
+    string username = 1;
+}
 
 message GetUserBalanceResponse {
     enum Status {
@@ -90,6 +92,7 @@ message GetUserBalanceResponse {
     }
     Status status = 1;
     float current = 2;
+    float withdrawn = 3;
 
 }
 

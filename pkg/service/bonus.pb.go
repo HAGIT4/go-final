@@ -7,6 +7,7 @@ import (
 	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	timestamp "github.com/golang/protobuf/ptypes/timestamp"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -25,6 +26,248 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type RegisterResponse_Status int32
+
+const (
+	RegisterResponse_INVALID               RegisterResponse_Status = 0
+	RegisterResponse_OK                    RegisterResponse_Status = 1
+	RegisterResponse_LOGIN_IN_USE          RegisterResponse_Status = 2
+	RegisterResponse_INTERNAL_SERVEL_ERROR RegisterResponse_Status = 3
+)
+
+var RegisterResponse_Status_name = map[int32]string{
+	0: "INVALID",
+	1: "OK",
+	2: "LOGIN_IN_USE",
+	3: "INTERNAL_SERVEL_ERROR",
+}
+
+var RegisterResponse_Status_value = map[string]int32{
+	"INVALID":               0,
+	"OK":                    1,
+	"LOGIN_IN_USE":          2,
+	"INTERNAL_SERVEL_ERROR": 3,
+}
+
+func (x RegisterResponse_Status) String() string {
+	return proto.EnumName(RegisterResponse_Status_name, int32(x))
+}
+
+func (RegisterResponse_Status) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{1, 0}
+}
+
+type LoginResponse_Status int32
+
+const (
+	LoginResponse_INVALID               LoginResponse_Status = 0
+	LoginResponse_OK                    LoginResponse_Status = 1
+	LoginResponse_UNAUTHORIZED          LoginResponse_Status = 2
+	LoginResponse_INTERNAL_SERVER_ERROR LoginResponse_Status = 3
+)
+
+var LoginResponse_Status_name = map[int32]string{
+	0: "INVALID",
+	1: "OK",
+	2: "UNAUTHORIZED",
+	3: "INTERNAL_SERVER_ERROR",
+}
+
+var LoginResponse_Status_value = map[string]int32{
+	"INVALID":               0,
+	"OK":                    1,
+	"UNAUTHORIZED":          2,
+	"INTERNAL_SERVER_ERROR": 3,
+}
+
+func (x LoginResponse_Status) String() string {
+	return proto.EnumName(LoginResponse_Status_name, int32(x))
+}
+
+func (LoginResponse_Status) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{3, 0}
+}
+
+type UploadOrderResponse_Status int32
+
+const (
+	UploadOrderResponse_INVALID                          UploadOrderResponse_Status = 0
+	UploadOrderResponse_OK                               UploadOrderResponse_Status = 1
+	UploadOrderResponse_ALREADY_UPLOADED_BY_THIS_USER    UploadOrderResponse_Status = 2
+	UploadOrderResponse_BAD_REQUEST                      UploadOrderResponse_Status = 3
+	UploadOrderResponse_UNAUTHORIZED                     UploadOrderResponse_Status = 4
+	UploadOrderResponse_ALREADY_UPLOADED_BY_ANOTHER_USER UploadOrderResponse_Status = 5
+	UploadOrderResponse_BAD_ORDER_NUMBER                 UploadOrderResponse_Status = 6
+	UploadOrderResponse_INTERNAL_SERVER_ERROR            UploadOrderResponse_Status = 7
+)
+
+var UploadOrderResponse_Status_name = map[int32]string{
+	0: "INVALID",
+	1: "OK",
+	2: "ALREADY_UPLOADED_BY_THIS_USER",
+	3: "BAD_REQUEST",
+	4: "UNAUTHORIZED",
+	5: "ALREADY_UPLOADED_BY_ANOTHER_USER",
+	6: "BAD_ORDER_NUMBER",
+	7: "INTERNAL_SERVER_ERROR",
+}
+
+var UploadOrderResponse_Status_value = map[string]int32{
+	"INVALID":                          0,
+	"OK":                               1,
+	"ALREADY_UPLOADED_BY_THIS_USER":    2,
+	"BAD_REQUEST":                      3,
+	"UNAUTHORIZED":                     4,
+	"ALREADY_UPLOADED_BY_ANOTHER_USER": 5,
+	"BAD_ORDER_NUMBER":                 6,
+	"INTERNAL_SERVER_ERROR":            7,
+}
+
+func (x UploadOrderResponse_Status) String() string {
+	return proto.EnumName(UploadOrderResponse_Status_name, int32(x))
+}
+
+func (UploadOrderResponse_Status) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{5, 0}
+}
+
+type GetOrderListResponse_Status int32
+
+const (
+	GetOrderListResponse_INVALID               GetOrderListResponse_Status = 0
+	GetOrderListResponse_OK                    GetOrderListResponse_Status = 1
+	GetOrderListResponse_NO_DATA               GetOrderListResponse_Status = 2
+	GetOrderListResponse_UNAUTHORIZED          GetOrderListResponse_Status = 3
+	GetOrderListResponse_INTERNAL_SERVER_ERROR GetOrderListResponse_Status = 4
+)
+
+var GetOrderListResponse_Status_name = map[int32]string{
+	0: "INVALID",
+	1: "OK",
+	2: "NO_DATA",
+	3: "UNAUTHORIZED",
+	4: "INTERNAL_SERVER_ERROR",
+}
+
+var GetOrderListResponse_Status_value = map[string]int32{
+	"INVALID":               0,
+	"OK":                    1,
+	"NO_DATA":               2,
+	"UNAUTHORIZED":          3,
+	"INTERNAL_SERVER_ERROR": 4,
+}
+
+func (x GetOrderListResponse_Status) String() string {
+	return proto.EnumName(GetOrderListResponse_Status_name, int32(x))
+}
+
+func (GetOrderListResponse_Status) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{8, 0}
+}
+
+type GetUserBalanceResponse_Status int32
+
+const (
+	GetUserBalanceResponse_INVALID               GetUserBalanceResponse_Status = 0
+	GetUserBalanceResponse_OK                    GetUserBalanceResponse_Status = 1
+	GetUserBalanceResponse_UNAUTHORIZED          GetUserBalanceResponse_Status = 2
+	GetUserBalanceResponse_INTERNAL_SERVER_ERROR GetUserBalanceResponse_Status = 3
+)
+
+var GetUserBalanceResponse_Status_name = map[int32]string{
+	0: "INVALID",
+	1: "OK",
+	2: "UNAUTHORIZED",
+	3: "INTERNAL_SERVER_ERROR",
+}
+
+var GetUserBalanceResponse_Status_value = map[string]int32{
+	"INVALID":               0,
+	"OK":                    1,
+	"UNAUTHORIZED":          2,
+	"INTERNAL_SERVER_ERROR": 3,
+}
+
+func (x GetUserBalanceResponse_Status) String() string {
+	return proto.EnumName(GetUserBalanceResponse_Status_name, int32(x))
+}
+
+func (GetUserBalanceResponse_Status) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{10, 0}
+}
+
+type WithdrawResponse_Status int32
+
+const (
+	WithdrawResponse_INVALID               WithdrawResponse_Status = 0
+	WithdrawResponse_OK                    WithdrawResponse_Status = 1
+	WithdrawResponse_UNAUTHORIZED          WithdrawResponse_Status = 2
+	WithdrawResponse_INSUFFICIENT_FUNDS    WithdrawResponse_Status = 3
+	WithdrawResponse_BAD_ORDER_NUMBER      WithdrawResponse_Status = 4
+	WithdrawResponse_INTERNAL_SERVER_ERROR WithdrawResponse_Status = 5
+)
+
+var WithdrawResponse_Status_name = map[int32]string{
+	0: "INVALID",
+	1: "OK",
+	2: "UNAUTHORIZED",
+	3: "INSUFFICIENT_FUNDS",
+	4: "BAD_ORDER_NUMBER",
+	5: "INTERNAL_SERVER_ERROR",
+}
+
+var WithdrawResponse_Status_value = map[string]int32{
+	"INVALID":               0,
+	"OK":                    1,
+	"UNAUTHORIZED":          2,
+	"INSUFFICIENT_FUNDS":    3,
+	"BAD_ORDER_NUMBER":      4,
+	"INTERNAL_SERVER_ERROR": 5,
+}
+
+func (x WithdrawResponse_Status) String() string {
+	return proto.EnumName(WithdrawResponse_Status_name, int32(x))
+}
+
+func (WithdrawResponse_Status) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{12, 0}
+}
+
+type WithdrawalsResponse_Status int32
+
+const (
+	WithdrawalsResponse_INVALID               WithdrawalsResponse_Status = 0
+	WithdrawalsResponse_OK                    WithdrawalsResponse_Status = 1
+	WithdrawalsResponse_NO_DATA               WithdrawalsResponse_Status = 2
+	WithdrawalsResponse_UNAUTHORIZED          WithdrawalsResponse_Status = 3
+	WithdrawalsResponse_INTERNAL_SERVER_ERROR WithdrawalsResponse_Status = 4
+)
+
+var WithdrawalsResponse_Status_name = map[int32]string{
+	0: "INVALID",
+	1: "OK",
+	2: "NO_DATA",
+	3: "UNAUTHORIZED",
+	4: "INTERNAL_SERVER_ERROR",
+}
+
+var WithdrawalsResponse_Status_value = map[string]int32{
+	"INVALID":               0,
+	"OK":                    1,
+	"NO_DATA":               2,
+	"UNAUTHORIZED":          3,
+	"INTERNAL_SERVER_ERROR": 4,
+}
+
+func (x WithdrawalsResponse_Status) String() string {
+	return proto.EnumName(WithdrawalsResponse_Status_name, int32(x))
+}
+
+func (WithdrawalsResponse_Status) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{14, 0}
+}
+
+// Register user
 type RegisterRequest struct {
 	Login                string   `protobuf:"bytes,1,opt,name=login,proto3" json:"login,omitempty"`
 	Password             string   `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
@@ -73,9 +316,10 @@ func (m *RegisterRequest) GetPassword() string {
 }
 
 type RegisterResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Status               RegisterResponse_Status `protobuf:"varint,1,opt,name=status,proto3,enum=service.RegisterResponse_Status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
 }
 
 func (m *RegisterResponse) Reset()         { *m = RegisterResponse{} }
@@ -103,28 +347,628 @@ func (m *RegisterResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_RegisterResponse proto.InternalMessageInfo
 
+func (m *RegisterResponse) GetStatus() RegisterResponse_Status {
+	if m != nil {
+		return m.Status
+	}
+	return RegisterResponse_INVALID
+}
+
+// Login user
+type LoginRequest struct {
+	Login                string   `protobuf:"bytes,1,opt,name=login,proto3" json:"login,omitempty"`
+	Password             string   `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LoginRequest) Reset()         { *m = LoginRequest{} }
+func (m *LoginRequest) String() string { return proto.CompactTextString(m) }
+func (*LoginRequest) ProtoMessage()    {}
+func (*LoginRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{2}
+}
+
+func (m *LoginRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_LoginRequest.Unmarshal(m, b)
+}
+func (m *LoginRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_LoginRequest.Marshal(b, m, deterministic)
+}
+func (m *LoginRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LoginRequest.Merge(m, src)
+}
+func (m *LoginRequest) XXX_Size() int {
+	return xxx_messageInfo_LoginRequest.Size(m)
+}
+func (m *LoginRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_LoginRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LoginRequest proto.InternalMessageInfo
+
+func (m *LoginRequest) GetLogin() string {
+	if m != nil {
+		return m.Login
+	}
+	return ""
+}
+
+func (m *LoginRequest) GetPassword() string {
+	if m != nil {
+		return m.Password
+	}
+	return ""
+}
+
+type LoginResponse struct {
+	Status               LoginResponse_Status `protobuf:"varint,1,opt,name=status,proto3,enum=service.LoginResponse_Status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
+}
+
+func (m *LoginResponse) Reset()         { *m = LoginResponse{} }
+func (m *LoginResponse) String() string { return proto.CompactTextString(m) }
+func (*LoginResponse) ProtoMessage()    {}
+func (*LoginResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{3}
+}
+
+func (m *LoginResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_LoginResponse.Unmarshal(m, b)
+}
+func (m *LoginResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_LoginResponse.Marshal(b, m, deterministic)
+}
+func (m *LoginResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LoginResponse.Merge(m, src)
+}
+func (m *LoginResponse) XXX_Size() int {
+	return xxx_messageInfo_LoginResponse.Size(m)
+}
+func (m *LoginResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_LoginResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LoginResponse proto.InternalMessageInfo
+
+func (m *LoginResponse) GetStatus() LoginResponse_Status {
+	if m != nil {
+		return m.Status
+	}
+	return LoginResponse_INVALID
+}
+
+// Upload order
+type UploadOrderRequest struct {
+	Order                int64    `protobuf:"varint,1,opt,name=order,proto3" json:"order,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *UploadOrderRequest) Reset()         { *m = UploadOrderRequest{} }
+func (m *UploadOrderRequest) String() string { return proto.CompactTextString(m) }
+func (*UploadOrderRequest) ProtoMessage()    {}
+func (*UploadOrderRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{4}
+}
+
+func (m *UploadOrderRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UploadOrderRequest.Unmarshal(m, b)
+}
+func (m *UploadOrderRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UploadOrderRequest.Marshal(b, m, deterministic)
+}
+func (m *UploadOrderRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UploadOrderRequest.Merge(m, src)
+}
+func (m *UploadOrderRequest) XXX_Size() int {
+	return xxx_messageInfo_UploadOrderRequest.Size(m)
+}
+func (m *UploadOrderRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UploadOrderRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UploadOrderRequest proto.InternalMessageInfo
+
+func (m *UploadOrderRequest) GetOrder() int64 {
+	if m != nil {
+		return m.Order
+	}
+	return 0
+}
+
+type UploadOrderResponse struct {
+	Status               UploadOrderResponse_Status `protobuf:"varint,1,opt,name=status,proto3,enum=service.UploadOrderResponse_Status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                   `json:"-"`
+	XXX_unrecognized     []byte                     `json:"-"`
+	XXX_sizecache        int32                      `json:"-"`
+}
+
+func (m *UploadOrderResponse) Reset()         { *m = UploadOrderResponse{} }
+func (m *UploadOrderResponse) String() string { return proto.CompactTextString(m) }
+func (*UploadOrderResponse) ProtoMessage()    {}
+func (*UploadOrderResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{5}
+}
+
+func (m *UploadOrderResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UploadOrderResponse.Unmarshal(m, b)
+}
+func (m *UploadOrderResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UploadOrderResponse.Marshal(b, m, deterministic)
+}
+func (m *UploadOrderResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UploadOrderResponse.Merge(m, src)
+}
+func (m *UploadOrderResponse) XXX_Size() int {
+	return xxx_messageInfo_UploadOrderResponse.Size(m)
+}
+func (m *UploadOrderResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_UploadOrderResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UploadOrderResponse proto.InternalMessageInfo
+
+func (m *UploadOrderResponse) GetStatus() UploadOrderResponse_Status {
+	if m != nil {
+		return m.Status
+	}
+	return UploadOrderResponse_INVALID
+}
+
+// Get order list
+type GetOrderListRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetOrderListRequest) Reset()         { *m = GetOrderListRequest{} }
+func (m *GetOrderListRequest) String() string { return proto.CompactTextString(m) }
+func (*GetOrderListRequest) ProtoMessage()    {}
+func (*GetOrderListRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{6}
+}
+
+func (m *GetOrderListRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetOrderListRequest.Unmarshal(m, b)
+}
+func (m *GetOrderListRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetOrderListRequest.Marshal(b, m, deterministic)
+}
+func (m *GetOrderListRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetOrderListRequest.Merge(m, src)
+}
+func (m *GetOrderListRequest) XXX_Size() int {
+	return xxx_messageInfo_GetOrderListRequest.Size(m)
+}
+func (m *GetOrderListRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetOrderListRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetOrderListRequest proto.InternalMessageInfo
+
+type OrderInfo struct {
+	Number               string               `protobuf:"bytes,1,opt,name=number,proto3" json:"number,omitempty"`
+	Status               string               `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	Accural              int64                `protobuf:"varint,3,opt,name=accural,proto3" json:"accural,omitempty"`
+	UploadedAt           *timestamp.Timestamp `protobuf:"bytes,4,opt,name=uploaded_at,json=uploadedAt,proto3" json:"uploaded_at,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
+}
+
+func (m *OrderInfo) Reset()         { *m = OrderInfo{} }
+func (m *OrderInfo) String() string { return proto.CompactTextString(m) }
+func (*OrderInfo) ProtoMessage()    {}
+func (*OrderInfo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{7}
+}
+
+func (m *OrderInfo) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_OrderInfo.Unmarshal(m, b)
+}
+func (m *OrderInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_OrderInfo.Marshal(b, m, deterministic)
+}
+func (m *OrderInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OrderInfo.Merge(m, src)
+}
+func (m *OrderInfo) XXX_Size() int {
+	return xxx_messageInfo_OrderInfo.Size(m)
+}
+func (m *OrderInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_OrderInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_OrderInfo proto.InternalMessageInfo
+
+func (m *OrderInfo) GetNumber() string {
+	if m != nil {
+		return m.Number
+	}
+	return ""
+}
+
+func (m *OrderInfo) GetStatus() string {
+	if m != nil {
+		return m.Status
+	}
+	return ""
+}
+
+func (m *OrderInfo) GetAccural() int64 {
+	if m != nil {
+		return m.Accural
+	}
+	return 0
+}
+
+func (m *OrderInfo) GetUploadedAt() *timestamp.Timestamp {
+	if m != nil {
+		return m.UploadedAt
+	}
+	return nil
+}
+
+type GetOrderListResponse struct {
+	Status               GetOrderListResponse_Status `protobuf:"varint,1,opt,name=status,proto3,enum=service.GetOrderListResponse_Status" json:"status,omitempty"`
+	OrderInfo            []*OrderInfo                `protobuf:"bytes,2,rep,name=orderInfo,proto3" json:"orderInfo,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
+	XXX_unrecognized     []byte                      `json:"-"`
+	XXX_sizecache        int32                       `json:"-"`
+}
+
+func (m *GetOrderListResponse) Reset()         { *m = GetOrderListResponse{} }
+func (m *GetOrderListResponse) String() string { return proto.CompactTextString(m) }
+func (*GetOrderListResponse) ProtoMessage()    {}
+func (*GetOrderListResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{8}
+}
+
+func (m *GetOrderListResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetOrderListResponse.Unmarshal(m, b)
+}
+func (m *GetOrderListResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetOrderListResponse.Marshal(b, m, deterministic)
+}
+func (m *GetOrderListResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetOrderListResponse.Merge(m, src)
+}
+func (m *GetOrderListResponse) XXX_Size() int {
+	return xxx_messageInfo_GetOrderListResponse.Size(m)
+}
+func (m *GetOrderListResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetOrderListResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetOrderListResponse proto.InternalMessageInfo
+
+func (m *GetOrderListResponse) GetStatus() GetOrderListResponse_Status {
+	if m != nil {
+		return m.Status
+	}
+	return GetOrderListResponse_INVALID
+}
+
+func (m *GetOrderListResponse) GetOrderInfo() []*OrderInfo {
+	if m != nil {
+		return m.OrderInfo
+	}
+	return nil
+}
+
+// Get user balance
+type GetUserBalanceRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetUserBalanceRequest) Reset()         { *m = GetUserBalanceRequest{} }
+func (m *GetUserBalanceRequest) String() string { return proto.CompactTextString(m) }
+func (*GetUserBalanceRequest) ProtoMessage()    {}
+func (*GetUserBalanceRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{9}
+}
+
+func (m *GetUserBalanceRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetUserBalanceRequest.Unmarshal(m, b)
+}
+func (m *GetUserBalanceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetUserBalanceRequest.Marshal(b, m, deterministic)
+}
+func (m *GetUserBalanceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetUserBalanceRequest.Merge(m, src)
+}
+func (m *GetUserBalanceRequest) XXX_Size() int {
+	return xxx_messageInfo_GetUserBalanceRequest.Size(m)
+}
+func (m *GetUserBalanceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetUserBalanceRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetUserBalanceRequest proto.InternalMessageInfo
+
+type GetUserBalanceResponse struct {
+	Status               GetUserBalanceResponse_Status `protobuf:"varint,1,opt,name=status,proto3,enum=service.GetUserBalanceResponse_Status" json:"status,omitempty"`
+	Current              float32                       `protobuf:"fixed32,2,opt,name=current,proto3" json:"current,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                      `json:"-"`
+	XXX_unrecognized     []byte                        `json:"-"`
+	XXX_sizecache        int32                         `json:"-"`
+}
+
+func (m *GetUserBalanceResponse) Reset()         { *m = GetUserBalanceResponse{} }
+func (m *GetUserBalanceResponse) String() string { return proto.CompactTextString(m) }
+func (*GetUserBalanceResponse) ProtoMessage()    {}
+func (*GetUserBalanceResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{10}
+}
+
+func (m *GetUserBalanceResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetUserBalanceResponse.Unmarshal(m, b)
+}
+func (m *GetUserBalanceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetUserBalanceResponse.Marshal(b, m, deterministic)
+}
+func (m *GetUserBalanceResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetUserBalanceResponse.Merge(m, src)
+}
+func (m *GetUserBalanceResponse) XXX_Size() int {
+	return xxx_messageInfo_GetUserBalanceResponse.Size(m)
+}
+func (m *GetUserBalanceResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetUserBalanceResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetUserBalanceResponse proto.InternalMessageInfo
+
+func (m *GetUserBalanceResponse) GetStatus() GetUserBalanceResponse_Status {
+	if m != nil {
+		return m.Status
+	}
+	return GetUserBalanceResponse_INVALID
+}
+
+func (m *GetUserBalanceResponse) GetCurrent() float32 {
+	if m != nil {
+		return m.Current
+	}
+	return 0
+}
+
+// Withdraw request
+type WithdrawRequest struct {
+	Order                string   `protobuf:"bytes,1,opt,name=order,proto3" json:"order,omitempty"`
+	Sum                  float32  `protobuf:"fixed32,2,opt,name=sum,proto3" json:"sum,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *WithdrawRequest) Reset()         { *m = WithdrawRequest{} }
+func (m *WithdrawRequest) String() string { return proto.CompactTextString(m) }
+func (*WithdrawRequest) ProtoMessage()    {}
+func (*WithdrawRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{11}
+}
+
+func (m *WithdrawRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_WithdrawRequest.Unmarshal(m, b)
+}
+func (m *WithdrawRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_WithdrawRequest.Marshal(b, m, deterministic)
+}
+func (m *WithdrawRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WithdrawRequest.Merge(m, src)
+}
+func (m *WithdrawRequest) XXX_Size() int {
+	return xxx_messageInfo_WithdrawRequest.Size(m)
+}
+func (m *WithdrawRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_WithdrawRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_WithdrawRequest proto.InternalMessageInfo
+
+func (m *WithdrawRequest) GetOrder() string {
+	if m != nil {
+		return m.Order
+	}
+	return ""
+}
+
+func (m *WithdrawRequest) GetSum() float32 {
+	if m != nil {
+		return m.Sum
+	}
+	return 0
+}
+
+type WithdrawResponse struct {
+	Status               WithdrawResponse_Status `protobuf:"varint,1,opt,name=status,proto3,enum=service.WithdrawResponse_Status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
+}
+
+func (m *WithdrawResponse) Reset()         { *m = WithdrawResponse{} }
+func (m *WithdrawResponse) String() string { return proto.CompactTextString(m) }
+func (*WithdrawResponse) ProtoMessage()    {}
+func (*WithdrawResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{12}
+}
+
+func (m *WithdrawResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_WithdrawResponse.Unmarshal(m, b)
+}
+func (m *WithdrawResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_WithdrawResponse.Marshal(b, m, deterministic)
+}
+func (m *WithdrawResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WithdrawResponse.Merge(m, src)
+}
+func (m *WithdrawResponse) XXX_Size() int {
+	return xxx_messageInfo_WithdrawResponse.Size(m)
+}
+func (m *WithdrawResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_WithdrawResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_WithdrawResponse proto.InternalMessageInfo
+
+func (m *WithdrawResponse) GetStatus() WithdrawResponse_Status {
+	if m != nil {
+		return m.Status
+	}
+	return WithdrawResponse_INVALID
+}
+
+// Get all withdrawals
+type WithdrawalsRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *WithdrawalsRequest) Reset()         { *m = WithdrawalsRequest{} }
+func (m *WithdrawalsRequest) String() string { return proto.CompactTextString(m) }
+func (*WithdrawalsRequest) ProtoMessage()    {}
+func (*WithdrawalsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{13}
+}
+
+func (m *WithdrawalsRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_WithdrawalsRequest.Unmarshal(m, b)
+}
+func (m *WithdrawalsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_WithdrawalsRequest.Marshal(b, m, deterministic)
+}
+func (m *WithdrawalsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WithdrawalsRequest.Merge(m, src)
+}
+func (m *WithdrawalsRequest) XXX_Size() int {
+	return xxx_messageInfo_WithdrawalsRequest.Size(m)
+}
+func (m *WithdrawalsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_WithdrawalsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_WithdrawalsRequest proto.InternalMessageInfo
+
+type WithdrawalsResponse struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *WithdrawalsResponse) Reset()         { *m = WithdrawalsResponse{} }
+func (m *WithdrawalsResponse) String() string { return proto.CompactTextString(m) }
+func (*WithdrawalsResponse) ProtoMessage()    {}
+func (*WithdrawalsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b83825e3ca88f3ef, []int{14}
+}
+
+func (m *WithdrawalsResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_WithdrawalsResponse.Unmarshal(m, b)
+}
+func (m *WithdrawalsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_WithdrawalsResponse.Marshal(b, m, deterministic)
+}
+func (m *WithdrawalsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WithdrawalsResponse.Merge(m, src)
+}
+func (m *WithdrawalsResponse) XXX_Size() int {
+	return xxx_messageInfo_WithdrawalsResponse.Size(m)
+}
+func (m *WithdrawalsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_WithdrawalsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_WithdrawalsResponse proto.InternalMessageInfo
+
 func init() {
+	proto.RegisterEnum("service.RegisterResponse_Status", RegisterResponse_Status_name, RegisterResponse_Status_value)
+	proto.RegisterEnum("service.LoginResponse_Status", LoginResponse_Status_name, LoginResponse_Status_value)
+	proto.RegisterEnum("service.UploadOrderResponse_Status", UploadOrderResponse_Status_name, UploadOrderResponse_Status_value)
+	proto.RegisterEnum("service.GetOrderListResponse_Status", GetOrderListResponse_Status_name, GetOrderListResponse_Status_value)
+	proto.RegisterEnum("service.GetUserBalanceResponse_Status", GetUserBalanceResponse_Status_name, GetUserBalanceResponse_Status_value)
+	proto.RegisterEnum("service.WithdrawResponse_Status", WithdrawResponse_Status_name, WithdrawResponse_Status_value)
+	proto.RegisterEnum("service.WithdrawalsResponse_Status", WithdrawalsResponse_Status_name, WithdrawalsResponse_Status_value)
 	proto.RegisterType((*RegisterRequest)(nil), "service.RegisterRequest")
 	proto.RegisterType((*RegisterResponse)(nil), "service.RegisterResponse")
+	proto.RegisterType((*LoginRequest)(nil), "service.LoginRequest")
+	proto.RegisterType((*LoginResponse)(nil), "service.LoginResponse")
+	proto.RegisterType((*UploadOrderRequest)(nil), "service.UploadOrderRequest")
+	proto.RegisterType((*UploadOrderResponse)(nil), "service.UploadOrderResponse")
+	proto.RegisterType((*GetOrderListRequest)(nil), "service.GetOrderListRequest")
+	proto.RegisterType((*OrderInfo)(nil), "service.OrderInfo")
+	proto.RegisterType((*GetOrderListResponse)(nil), "service.GetOrderListResponse")
+	proto.RegisterType((*GetUserBalanceRequest)(nil), "service.GetUserBalanceRequest")
+	proto.RegisterType((*GetUserBalanceResponse)(nil), "service.GetUserBalanceResponse")
+	proto.RegisterType((*WithdrawRequest)(nil), "service.WithdrawRequest")
+	proto.RegisterType((*WithdrawResponse)(nil), "service.WithdrawResponse")
+	proto.RegisterType((*WithdrawalsRequest)(nil), "service.WithdrawalsRequest")
+	proto.RegisterType((*WithdrawalsResponse)(nil), "service.WithdrawalsResponse")
 }
 
 func init() { proto.RegisterFile("bonus.proto", fileDescriptor_b83825e3ca88f3ef) }
 
 var fileDescriptor_b83825e3ca88f3ef = []byte{
-	// 200 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x4e, 0xca, 0xcf, 0x2b,
-	0x2d, 0xd6, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2f, 0x4e, 0x2d, 0x2a, 0xcb, 0x4c, 0x4e,
-	0x95, 0x92, 0x49, 0xcf, 0xcf, 0x4f, 0xcf, 0x49, 0xd5, 0x4f, 0x2c, 0xc8, 0xd4, 0x4f, 0xcc, 0xcb,
-	0xcb, 0x2f, 0x49, 0x2c, 0xc9, 0xcc, 0xcf, 0x83, 0x2a, 0x53, 0x72, 0xe6, 0xe2, 0x0f, 0x4a, 0x4d,
-	0xcf, 0x2c, 0x2e, 0x49, 0x2d, 0x0a, 0x4a, 0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0x11, 0x12, 0xe1, 0x62,
-	0xcd, 0xc9, 0x4f, 0xcf, 0xcc, 0x93, 0x60, 0x54, 0x60, 0xd4, 0xe0, 0x0c, 0x82, 0x70, 0x84, 0xa4,
-	0xb8, 0x38, 0x0a, 0x12, 0x8b, 0x8b, 0xcb, 0xf3, 0x8b, 0x52, 0x24, 0x98, 0xc0, 0x12, 0x70, 0xbe,
-	0x92, 0x10, 0x97, 0x00, 0xc2, 0x90, 0xe2, 0x82, 0xfc, 0xbc, 0xe2, 0x54, 0xa3, 0x6c, 0x2e, 0x1e,
-	0x27, 0x90, 0x73, 0x82, 0x21, 0xce, 0x10, 0x8a, 0xe6, 0xe2, 0x80, 0xa9, 0x11, 0x92, 0xd0, 0x83,
-	0x3a, 0x4e, 0x0f, 0xcd, 0x6e, 0x29, 0x49, 0x2c, 0x32, 0x10, 0x03, 0x95, 0xa4, 0x9a, 0x2e, 0x3f,
-	0x99, 0xcc, 0x24, 0xa2, 0x24, 0x04, 0xf6, 0x49, 0x69, 0x71, 0x6a, 0x91, 0x7e, 0x11, 0x54, 0x8d,
-	0x13, 0x67, 0x14, 0xcc, 0xbb, 0x49, 0x6c, 0x60, 0x7f, 0x19, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff,
-	0xd5, 0xad, 0x48, 0xf5, 0x0d, 0x01, 0x00, 0x00,
+	// 781 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x95, 0x41, 0x6f, 0xe3, 0x44,
+	0x14, 0xc7, 0xb1, 0x9d, 0x26, 0x9b, 0x97, 0x42, 0xad, 0x69, 0x5a, 0xbc, 0x11, 0x2b, 0x82, 0x59,
+	0xa1, 0x8a, 0x43, 0x82, 0x82, 0x90, 0x40, 0x8b, 0x10, 0xce, 0xda, 0x6d, 0x0d, 0xc6, 0x86, 0xb1,
+	0xbd, 0xab, 0x5d, 0x0e, 0x96, 0x93, 0xcc, 0x06, 0x8b, 0xc4, 0x0e, 0x9e, 0x31, 0xe5, 0xcc, 0x17,
+	0x40, 0x82, 0x0b, 0x9f, 0x85, 0x03, 0x47, 0xbe, 0x00, 0x1f, 0x80, 0x0b, 0x1f, 0x04, 0xd9, 0x1e,
+	0xa7, 0xc4, 0x75, 0x8a, 0x8a, 0xe0, 0x96, 0x37, 0xf3, 0xf7, 0xd3, 0xfb, 0xbd, 0xff, 0xbc, 0x3c,
+	0xe8, 0xcd, 0x92, 0x38, 0xa3, 0xa3, 0x4d, 0x9a, 0xb0, 0x04, 0x75, 0x28, 0x49, 0xbf, 0x8d, 0xe6,
+	0x64, 0xf0, 0xda, 0x32, 0x49, 0x96, 0x2b, 0x32, 0x0e, 0x37, 0xd1, 0x38, 0x8c, 0xe3, 0x84, 0x85,
+	0x2c, 0x4a, 0x62, 0x2e, 0x1b, 0xbc, 0xce, 0x6f, 0x8b, 0x68, 0x96, 0xbd, 0x18, 0xb3, 0x68, 0x4d,
+	0x28, 0x0b, 0xd7, 0x9b, 0x52, 0xa0, 0x3e, 0x86, 0x23, 0x4c, 0x96, 0x11, 0x65, 0x24, 0xc5, 0xe4,
+	0x9b, 0x8c, 0x50, 0x86, 0xfa, 0x70, 0xb0, 0x4a, 0x96, 0x51, 0xac, 0x08, 0x43, 0xe1, 0xac, 0x8b,
+	0xcb, 0x00, 0x0d, 0xe0, 0xde, 0x26, 0xa4, 0xf4, 0x2a, 0x49, 0x17, 0x8a, 0x58, 0x5c, 0x6c, 0x63,
+	0xf5, 0x67, 0x01, 0xe4, 0xeb, 0x2c, 0x74, 0x93, 0xc4, 0x94, 0xa0, 0xf7, 0xa1, 0x4d, 0x59, 0xc8,
+	0x32, 0x5a, 0xe4, 0x79, 0x65, 0x32, 0x1c, 0xf1, 0x92, 0x47, 0x75, 0xe9, 0xc8, 0x2d, 0x74, 0x98,
+	0xeb, 0xd5, 0x4f, 0xa0, 0x5d, 0x9e, 0xa0, 0x1e, 0x74, 0x4c, 0xfb, 0x89, 0x66, 0x99, 0xba, 0xfc,
+	0x12, 0x6a, 0x83, 0xe8, 0x7c, 0x2a, 0x0b, 0x48, 0x86, 0x43, 0xcb, 0xb9, 0x30, 0xed, 0xc0, 0xb4,
+	0x03, 0xdf, 0x35, 0x64, 0x11, 0xdd, 0x87, 0x13, 0xd3, 0xf6, 0x0c, 0x6c, 0x6b, 0x56, 0xe0, 0x1a,
+	0xf8, 0x89, 0x61, 0x05, 0x06, 0xc6, 0x0e, 0x96, 0x25, 0xf5, 0x63, 0x38, 0xb4, 0xf2, 0xfa, 0xff,
+	0x3d, 0xdc, 0x8f, 0x02, 0xbc, 0xcc, 0x53, 0x70, 0xb2, 0xf7, 0x6a, 0x64, 0x0f, 0xb6, 0x64, 0x3b,
+	0xba, 0xbb, 0x63, 0xf9, 0xb6, 0xe6, 0x7b, 0x97, 0x0e, 0x36, 0x9f, 0x1b, 0x7a, 0x13, 0x16, 0xde,
+	0x62, 0xbd, 0x0d, 0xc8, 0xdf, 0xac, 0x92, 0x70, 0xe1, 0xa4, 0x8b, 0x1d, 0xe7, 0x92, 0x3c, 0x2e,
+	0xea, 0x92, 0x70, 0x19, 0xa8, 0x3f, 0x88, 0x70, 0xbc, 0x23, 0xe6, 0x18, 0x8f, 0x6a, 0x18, 0x6f,
+	0x6e, 0x31, 0x1a, 0xd4, 0x75, 0x98, 0x5f, 0x84, 0xdb, 0x69, 0xde, 0x80, 0x07, 0x9a, 0x85, 0x0d,
+	0x4d, 0x7f, 0x16, 0xf8, 0x9f, 0x5b, 0x8e, 0xa6, 0x1b, 0x7a, 0x30, 0x7d, 0x16, 0x78, 0x97, 0xa6,
+	0x9b, 0x9b, 0x86, 0x65, 0x11, 0x1d, 0x41, 0x6f, 0xaa, 0xe9, 0x01, 0x36, 0xbe, 0xf0, 0x0d, 0xd7,
+	0x93, 0xa5, 0x1b, 0x1d, 0x68, 0xa1, 0x87, 0x30, 0x6c, 0xca, 0xa2, 0xd9, 0x8e, 0x77, 0x69, 0xe0,
+	0x32, 0xd1, 0x01, 0xea, 0x83, 0x9c, 0x27, 0x72, 0xb0, 0x6e, 0xe0, 0xc0, 0xf6, 0x3f, 0x9b, 0x1a,
+	0x58, 0x6e, 0xef, 0xef, 0x5e, 0x47, 0x3d, 0x81, 0xe3, 0x0b, 0xc2, 0x0a, 0x3e, 0x2b, 0xa2, 0x8c,
+	0xb7, 0x2f, 0x77, 0xba, 0x5b, 0x1c, 0x9a, 0xf1, 0x8b, 0x04, 0x9d, 0x42, 0x3b, 0xce, 0xd6, 0x33,
+	0xde, 0xcd, 0x2e, 0xe6, 0x51, 0x7e, 0xce, 0xdb, 0x56, 0xbe, 0x14, 0x1e, 0x21, 0x05, 0x3a, 0xe1,
+	0x7c, 0x9e, 0xa5, 0xe1, 0x4a, 0x91, 0x8a, 0xf6, 0x57, 0x21, 0x7a, 0x04, 0xbd, 0xac, 0xe8, 0x28,
+	0x59, 0x04, 0x21, 0x53, 0x5a, 0x43, 0xe1, 0xac, 0x37, 0x19, 0x8c, 0xca, 0xd1, 0x1c, 0x55, 0xa3,
+	0x39, 0xf2, 0xaa, 0xd1, 0xc4, 0x50, 0xc9, 0x35, 0xa6, 0xfe, 0x21, 0x40, 0x7f, 0xb7, 0x58, 0x6e,
+	0xdf, 0x87, 0x35, 0xfb, 0x1e, 0x6e, 0xed, 0x6b, 0x92, 0xd7, 0xfc, 0x43, 0xef, 0x40, 0x37, 0xa9,
+	0x50, 0x15, 0x71, 0x28, 0x9d, 0xf5, 0x26, 0x68, 0x9b, 0x60, 0xdb, 0x04, 0x7c, 0x2d, 0x52, 0x9f,
+	0xde, 0x6e, 0x78, 0x0f, 0x3a, 0xb6, 0x13, 0xe8, 0x9a, 0xa7, 0xc9, 0xe2, 0x0d, 0x27, 0xa5, 0xfd,
+	0x6e, 0xb4, 0xd4, 0x57, 0xe1, 0xe4, 0x82, 0x30, 0x9f, 0x92, 0x74, 0x1a, 0xae, 0xc2, 0x78, 0x4e,
+	0x2a, 0x3f, 0x7e, 0x15, 0xe0, 0xb4, 0x7e, 0xc3, 0xe1, 0x3f, 0xaa, 0xc1, 0xbf, 0xf5, 0x77, 0xf8,
+	0x86, 0x0f, 0xea, 0xf8, 0x0a, 0x74, 0xe6, 0x59, 0x9a, 0x92, 0x98, 0x15, 0x2e, 0x8a, 0xb8, 0x0a,
+	0xff, 0xd3, 0x29, 0xfd, 0x00, 0x8e, 0x9e, 0x46, 0xec, 0xab, 0x45, 0x1a, 0x5e, 0x35, 0x8e, 0x68,
+	0x97, 0x8f, 0x28, 0x92, 0x41, 0xa2, 0xd9, 0x9a, 0x97, 0x92, 0xff, 0x54, 0x7f, 0x13, 0x40, 0xbe,
+	0xfe, 0xf6, 0x1f, 0xff, 0x52, 0xeb, 0xd2, 0xfa, 0xb8, 0x7e, 0x77, 0x57, 0xaa, 0x53, 0x40, 0xa6,
+	0xed, 0xfa, 0xe7, 0xe7, 0xe6, 0x63, 0xd3, 0xb0, 0xbd, 0xe0, 0xdc, 0xb7, 0x75, 0x57, 0x96, 0x1a,
+	0x67, 0xad, 0xb5, 0xbf, 0x07, 0x07, 0x6a, 0x1f, 0x50, 0x55, 0x5c, 0xb8, 0xa2, 0x95, 0xb5, 0x31,
+	0x1c, 0xef, 0x9c, 0x96, 0x55, 0xff, 0x6f, 0x6f, 0x6c, 0xf2, 0x35, 0x1c, 0x4e, 0xf3, 0xed, 0xe9,
+	0x96, 0xfd, 0x42, 0x5f, 0xc2, 0xbd, 0x6a, 0x0b, 0x21, 0xa5, 0x61, 0x31, 0x15, 0x55, 0x0e, 0xee,
+	0xef, 0x5d, 0x59, 0xea, 0xe0, 0xfb, 0xdf, 0xff, 0xfc, 0x49, 0xec, 0xab, 0xa8, 0x58, 0xbc, 0x19,
+	0x25, 0xe9, 0x38, 0xe5, 0x9a, 0x69, 0xf7, 0x79, 0xb5, 0x9d, 0x67, 0xed, 0x62, 0xba, 0xdf, 0xfd,
+	0x2b, 0x00, 0x00, 0xff, 0xff, 0x42, 0x6d, 0x99, 0xf1, 0xbc, 0x07, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.

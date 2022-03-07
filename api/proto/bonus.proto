@@ -1,8 +1,11 @@
 syntax = "proto3";
 package service;
 import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
 option go_package = "service";
 
+// Register user
 message RegisterRequest {
     string login = 1;
     string password = 2;
@@ -15,8 +18,26 @@ message RegisterResponse {
         LOGIN_IN_USE = 2;
         INTERNAL_SERVEL_ERROR = 3;
     }
+    Status status = 1;
 }
 
+// Login user
+message LoginRequest {
+    string login = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    enum Status {
+        INVALID = 0;
+        OK = 1;
+        UNAUTHORIZED = 2;
+        INTERNAL_SERVER_ERROR = 3;
+    }
+    Status status = 1;
+}
+
+// Upload order
 message UploadOrderRequest {
     int64 order = 1;
 }
@@ -32,12 +53,17 @@ message UploadOrderResponse {
         BAD_ORDER_NUMBER = 6;
         INTERNAL_SERVER_ERROR = 7;
     }
+    Status status = 1;
 }
 
+// Get order list
 message GetOrderListRequest {}
 
 message OrderInfo {
-    
+    string number = 1;
+    string status = 2;
+    int64 accural = 3;
+    google.protobuf.Timestamp uploaded_at = 4;
 }
 
 message GetOrderListResponse {
@@ -48,7 +74,54 @@ message GetOrderListResponse {
         UNAUTHORIZED = 3;
         INTERNAL_SERVER_ERROR = 4;
     }
+    Status status = 1;
+    repeated OrderInfo orderInfo = 2;
+}
 
+// Get user balance
+message GetUserBalanceRequest {}
+
+message GetUserBalanceResponse {
+    enum Status {
+        INVALID = 0;
+        OK = 1;
+        UNAUTHORIZED = 2;
+        INTERNAL_SERVER_ERROR = 3;
+    }
+    Status status = 1;
+    float current = 2;
+
+}
+
+// Withdraw request
+message WithdrawRequest {
+    string order = 1;
+    float sum = 2;
+}
+
+message WithdrawResponse {
+    enum Status {
+        INVALID = 0;
+        OK = 1;
+        UNAUTHORIZED = 2;
+        INSUFFICIENT_FUNDS = 3;
+        BAD_ORDER_NUMBER = 4;
+        INTERNAL_SERVER_ERROR = 5;
+    }
+    Status status = 1;
+}
+
+// Get all withdrawals
+message WithdrawalsRequest {}
+
+message WithdrawalsResponse {
+    enum Status {
+        INVALID = 0;
+        OK = 1;
+        NO_DATA = 2;
+        UNAUTHORIZED = 3;
+        INTERNAL_SERVER_ERROR = 4;
+    }
 }
 
 service BonusService {

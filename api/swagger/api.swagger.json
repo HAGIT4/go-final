@@ -69,7 +69,22 @@
       }
     },
     "serviceRegisterResponse": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/serviceRegisterResponseStatus"
+        }
+      }
+    },
+    "serviceRegisterResponseStatus": {
+      "type": "string",
+      "enum": [
+        "INVALID",
+        "OK",
+        "LOGIN_IN_USE",
+        "INTERNAL_SERVEL_ERROR"
+      ],
+      "default": "INVALID"
     }
   }
 }

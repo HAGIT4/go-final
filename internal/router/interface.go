@@ -1,3 +1,3 @@
 package router
 
-type bonusRouterInterface interface{}
+type BonusRouterInterface interface{}

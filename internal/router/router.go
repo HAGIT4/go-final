@@ -10,7 +10,7 @@ type bonusRouter struct {
 	mux *gin.Engine
 }
 
-var _ bonusRouterInterface = (*bonusRouter)(nil)
+var _ BonusRouterInterface = (*bonusRouter)(nil)
 
 func NewBonusRouter(cfg *routerCfg.BonusRouterConfig) (r *bonusRouter, err error) {
 	mux := gin.Default()

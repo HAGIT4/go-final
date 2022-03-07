@@ -5,5 +5,6 @@ import (
 )
 
 type BonusServiceConfig struct {
-	Storage storage.BonusStorageInterface
+	Storage              storage.BonusStorageInterface
+	AccuralSystemAddress string
 }

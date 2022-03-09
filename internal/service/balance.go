@@ -6,6 +6,7 @@ import (
 )
 
 func (sv *BonusService) GetUserBalance(req *pkgService.GetUserBalanceRequest) (resp *pkgService.GetUserBalanceResponse) {
+	resp = &pkgService.GetUserBalanceResponse{}
 	username := req.GetUsername()
 	userId, found, err := sv.getUserIdByUsername(username)
 	if err != nil {
@@ -17,12 +18,12 @@ func (sv *BonusService) GetUserBalance(req *pkgService.GetUserBalanceRequest) (r
 		return resp
 	}
 
-	current, withdrawn, found, err := sv.getBalanceByUserId(userId)
+	current, withdrawn, foundBalance, err := sv.getBalanceByUserId(userId)
 	if err != nil {
 		resp.Status = pkgService.GetUserBalanceResponse_INTERNAL_SERVER_ERROR
 		return resp
 	}
-	if !found {
+	if !foundBalance {
 		resp.Status = pkgService.GetUserBalanceResponse_UNAUTHORIZED
 		return resp
 	}
@@ -46,5 +47,5 @@ func (sv *BonusService) getBalanceByUserId(userId int) (current float32, withdra
 		current = float32(dbResp.Current) / 100
 		withdrawn = float32(dbResp.Withdrawn) / 100
 	}
-	return current, withdrawn, found, nil
+	return current, withdrawn, dbResp.Found, nil
 }

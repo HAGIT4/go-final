@@ -73,6 +73,9 @@
       "properties": {
         "status": {
           "$ref": "#/definitions/serviceRegisterResponseStatus"
+        },
+        "auth_token": {
+          "type": "string"
         }
       }
     },

@@ -19,6 +19,7 @@ message RegisterResponse {
         INTERNAL_SERVEL_ERROR = 3;
     }
     Status status = 1;
+    string auth_token = 2;
 }
 
 // Login user
@@ -35,6 +36,7 @@ message LoginResponse {
         INTERNAL_SERVER_ERROR = 3;
     }
     Status status = 1;
+    string auth_token = 2;
 }
 
 // Upload order

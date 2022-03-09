@@ -10,7 +10,7 @@ func (st *BonusStorage) AddUser(req *modelStorage.AddUserRequest) (err error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	_, err = st.connection.Exec(ctx, "INSERT INTO user(username, passwdHash) VALUES($1, $2)",
+	_, err = st.connection.Exec(ctx, "INSERT INTO bonus.user(username, passwd_hash) VALUES($1, $2)",
 		req.Username, req.PasswdHash,
 	)
 	if err != nil {
@@ -24,7 +24,7 @@ func (st *BonusStorage) GetUserByUsername(req *modelStorage.GetUserByUsernameReq
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	sqlResult, err := st.connection.Query(ctx, "SELECT * FROM user WHERE username=$1",
+	sqlResult, err := st.connection.Query(ctx, "SELECT * FROM bonus.user WHERE username=$1",
 		req.Username,
 	)
 	if err != nil {
@@ -38,6 +38,49 @@ func (st *BonusStorage) GetUserByUsername(req *modelStorage.GetUserByUsernameReq
 			return nil, err
 		}
 	}
-	resp.Found = true
+	if userId == 0 {
+		resp = &modelStorage.GetUserByUsernameResponse{
+			Found: false,
+		}
+	} else {
+		resp.Found = true // will it work?
+	}
+
+	return resp, nil
+}
+
+func (st *BonusStorage) GetUserIdByUsername(req *modelStorage.GetUserIdByUsernameRequest) (resp *modelStorage.GetUserIdByUsernameResponse, err error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	sqlResult, err := st.connection.Query(ctx, "SELECT id FROM bonus.user WHERE username=$1", req.Username)
+	if err != nil {
+		return nil, err
+	}
+	defer sqlResult.Close()
+
+	var userId int
+	for sqlResult.Next() {
+		if err = sqlResult.Scan(&userId); err != nil {
+			return nil, err
+		}
+	}
+	err = sqlResult.Err()
+	if err != nil {
+		return nil, err
+	}
+
+	resp = &modelStorage.GetUserIdByUsernameResponse{}
+	if userId == 0 {
+		resp = &modelStorage.GetUserIdByUsernameResponse{
+			UserId: 0,
+			Found:  false,
+		}
+	} else {
+		resp = &modelStorage.GetUserIdByUsernameResponse{
+			UserId: userId,
+			Found:  true,
+		}
+	}
 	return resp, nil
 }

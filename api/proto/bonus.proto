@@ -39,9 +39,26 @@ message LoginResponse {
     string auth_token = 2;
 }
 
+// Authenticate user
+message AuthRequest {
+    string token = 1;
+}
+
+message AuthResponse {
+    enum Status {
+        INVALID = 0;
+        OK = 1;
+        UNAUTHORIZED = 2;
+        INTERNAL_SERVER_ERROR = 3;
+    }
+    Status status = 1;
+    string username = 2;
+}
+
 // Upload order
 message UploadOrderRequest {
     int64 order = 1;
+    string username = 2;
 }
 
 message UploadOrderResponse {

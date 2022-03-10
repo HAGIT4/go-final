@@ -5,7 +5,7 @@ import (
 
 	service "github.com/HAGIT4/go-final/internal/service"
 	pkgService "github.com/HAGIT4/go-final/pkg/service"
-	"github.com/gin-gonic/gin"
+	gin "github.com/gin-gonic/gin"
 )
 
 func AddBalanceRoutes(rg *gin.RouterGroup, sv service.BonusServiceInterface) {

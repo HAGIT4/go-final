@@ -3,10 +3,10 @@ package routes
 import (
 	"net/http"
 
-	"github.com/HAGIT4/go-final/internal/service"
+	service "github.com/HAGIT4/go-final/internal/service"
 	modelRouter "github.com/HAGIT4/go-final/pkg/router/model"
 	pkgService "github.com/HAGIT4/go-final/pkg/service"
-	"github.com/gin-gonic/gin"
+	gin "github.com/gin-gonic/gin"
 )
 
 func AddUserRoutes(rg *gin.RouterGroup, sv service.BonusServiceInterface) {

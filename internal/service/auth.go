@@ -84,3 +84,21 @@ func (sv *BonusService) Login(req *pkgService.LoginRequest) (resp *pkgService.Lo
 	}
 	return resp
 }
+
+func (sv *BonusService) Authenticate(req *pkgService.AuthRequest) (resp *pkgService.AuthResponse) {
+	resp = &pkgService.AuthResponse{}
+	token, err := sv.authService.ValidateToken(req.Token)
+	if err != nil {
+		resp.Status = pkgService.AuthResponse_UNAUTHORIZED
+		return resp
+	}
+	claims, ok := token.Claims.(*authClaims)
+	if !ok {
+		resp.Status = pkgService.AuthResponse_INTERNAL_SERVER_ERROR
+		return resp
+	} else {
+		resp.Status = pkgService.AuthResponse_OK
+		resp.Username = claims.Username
+		return resp
+	}
+}

@@ -49,5 +49,6 @@ func (asv *authService) ValidateToken(encodedToken string) (token *jwt.Token, er
 		}
 		return []byte(asv.secretKey), nil
 	}
-	return jwt.Parse(encodedToken, keyFunc)
+	claims := &authClaims{}
+	return jwt.ParseWithClaims(encodedToken, claims, keyFunc)
 }

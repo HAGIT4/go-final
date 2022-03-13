@@ -136,9 +136,17 @@ message WithdrawResponse {
 }
 
 // Get all withdrawals
-message WithdrawalsRequest {}
+message GetAllWithdrawalsByUserRequest {
+    string username = 1;
+}
 
-message WithdrawalsResponse {
+message Withdrawal {
+    string order = 1;
+    float sum = 2;
+    string processed_at = 3;
+}
+
+message GetAllWithdrawalsByUserResponse {
     enum Status {
         INVALID = 0;
         OK = 1;
@@ -146,6 +154,8 @@ message WithdrawalsResponse {
         UNAUTHORIZED = 3;
         INTERNAL_SERVER_ERROR = 4;
     }
+    Status status = 1;
+    repeated Withdrawal withdrawal_info = 2;
 }
 
 service BonusService {

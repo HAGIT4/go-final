@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 type Balance struct {
 	Current   int
 	Withdrawn int
@@ -12,4 +14,19 @@ type GetBalanceByUserIdRequest struct {
 type GetBalanceByUserIdResponse struct {
 	Balance
 	Found bool
+}
+
+type GetAllWithdrawalsByUserIdRequest struct {
+	UserId int
+}
+
+type Withdrawal struct {
+	OrderId     int
+	Sum         int
+	UserId      int
+	ProcessedAt time.Time
+}
+
+type GetAllWithdrawalsByUserIdResponse struct {
+	Withdrawals []Withdrawal
 }

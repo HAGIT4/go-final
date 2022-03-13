@@ -9,4 +9,5 @@ type BonusServiceInterface interface {
 	GetUserBalance(req *pkgService.GetUserBalanceRequest) (resp *pkgService.GetUserBalanceResponse)
 	UploadOrder(req *pkgService.UploadOrderRequest) (resp *pkgService.UploadOrderResponse)
 	GetAllOrdersFromUser(req *pkgService.GetOrderListRequest) (resp *pkgService.GetOrderListResponse)
+	GetUserWithdrawals(req *pkgService.GetAllWithdrawalsByUserRequest) (resp *pkgService.GetAllWithdrawalsByUserResponse)
 }

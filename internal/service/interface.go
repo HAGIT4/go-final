@@ -8,4 +8,5 @@ type BonusServiceInterface interface {
 	Authenticate(req *pkgService.AuthRequest) (resp *pkgService.AuthResponse)
 	GetUserBalance(req *pkgService.GetUserBalanceRequest) (resp *pkgService.GetUserBalanceResponse)
 	UploadOrder(req *pkgService.UploadOrderRequest) (resp *pkgService.UploadOrderResponse)
+	GetAllOrdersFromUser(req *pkgService.GetOrderListRequest) (resp *pkgService.GetOrderListResponse)
 }

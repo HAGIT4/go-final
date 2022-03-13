@@ -14,7 +14,7 @@ import (
 
 func AddOrdersRoutes(rg *gin.RouterGroup, sv service.BonusServiceInterface) {
 	rg.POST("/orders", middleware.AuthenticateUserMiddleware(sv), uploadOrderHandler(sv))
-	rg.GET("/orders", getOrderListHandler(sv))
+	rg.GET("/orders", middleware.AuthenticateUserMiddleware(sv), getOrderListHandler(sv))
 }
 
 func uploadOrderHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
@@ -36,14 +36,29 @@ func uploadOrderHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 			Username: username,
 		}
 		svResp := sv.UploadOrder(svReq)
-		fmt.Print(svResp.Status)
+		fmt.Print(svResp.Status) // >????
 	}
 	return
 }
 
 func getOrderListHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 	h = func(c *gin.Context) {
-
+		username := c.GetString("username")
+		svReq := &pkgService.GetOrderListRequest{
+			Username: username,
+		}
+		svResp := sv.GetAllOrdersFromUser(svReq)
+		switch svResp.Status {
+		case pkgService.GetOrderListResponse_INTERNAL_SERVER_ERROR:
+			c.AbortWithStatus(http.StatusInternalServerError)
+			return
+		case pkgService.GetOrderListResponse_NO_DATA:
+			c.Status(http.StatusNoContent)
+			return
+		case pkgService.GetOrderListResponse_OK:
+			c.JSON(http.StatusOK, svResp.OrderInfo)
+			return
+		}
 	}
 	return
 }

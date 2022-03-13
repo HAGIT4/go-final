@@ -3,21 +3,23 @@ package routes
 import (
 	"net/http"
 
+	"github.com/HAGIT4/go-final/internal/router/middleware"
 	service "github.com/HAGIT4/go-final/internal/service"
 	pkgService "github.com/HAGIT4/go-final/pkg/service"
 	gin "github.com/gin-gonic/gin"
 )
 
 func AddBalanceRoutes(rg *gin.RouterGroup, sv service.BonusServiceInterface) {
-	rg.GET("/balance", getBalanceHandler(sv))
+	rg.GET("/balance", middleware.AuthenticateUserMiddleware(sv), getBalanceHandler(sv))
 	rg.POST("/balance/withdraw", withdrawHandler(sv))
 	rg.POST("/balance/withdrawals", getWithdrawalsInfoHandler(sv))
 }
 
 func getBalanceHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 	h = func(c *gin.Context) {
+		username := c.GetString("username")
 		svReq := &pkgService.GetUserBalanceRequest{
-			Username: "test",
+			Username: username,
 		}
 		svResp := sv.GetUserBalance(svReq)
 		switch svResp.GetStatus() {

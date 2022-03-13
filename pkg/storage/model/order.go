@@ -1,10 +1,13 @@
 package model
 
-import "time"
+import (
+	"time"
+)
 
 type UploadOrderRequest struct {
 	Number     int
 	Status     string
+	Accural    int
 	UserId     int
 	UploadedAt time.Time
 }
@@ -19,4 +22,19 @@ type GetOrderByOrderIdResponse struct {
 	UserId     int
 	Status     string
 	UploadedAt time.Time
+}
+
+type GetAllOrdersFromUserRequest struct {
+	UserId int
+}
+
+type Order struct {
+	Number     int
+	Status     string
+	Accural    int
+	UploadedAt time.Time
+}
+
+type GetAllOrdersFromUserResponse struct {
+	Orders []Order
 }

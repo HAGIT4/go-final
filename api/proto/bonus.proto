@@ -76,13 +76,15 @@ message UploadOrderResponse {
 }
 
 // Get order list
-message GetOrderListRequest {}
+message GetOrderListRequest {
+    string username = 1;
+}
 
 message OrderInfo {
     string number = 1;
     string status = 2;
-    int64 accural = 3;
-    google.protobuf.Timestamp uploaded_at = 4;
+    float accural = 3;
+    string uploaded_at = 4;
 }
 
 message GetOrderListResponse {

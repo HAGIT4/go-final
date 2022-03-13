@@ -12,9 +12,9 @@ func (st *BonusStorage) UploadOrder(req *modelStorage.UploadOrderRequest) (resp 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	sqlStmt := `INSERT INTO bonus.order(number, status, user_id, uploaded_at) VALUES (
-		$1, $2, $3, $4)`
-	_, err = st.connection.Exec(ctx, sqlStmt, req.Number, req.Status, req.UserId, req.UploadedAt)
+	sqlStmt := `INSERT INTO bonus.order(number, status, accural, user_id, uploaded_at) VALUES (
+		$1, $2, $3, $4, $5)`
+	_, err = st.connection.Exec(ctx, sqlStmt, req.Number, req.Status, req.Accural, req.UserId, req.UploadedAt)
 	if err != nil {
 		return nil, err
 	}
@@ -51,5 +51,42 @@ func (st *BonusStorage) GetOrderByOrderId(req *modelStorage.GetOrderByOrderIdReq
 		Status:     status,
 		UploadedAt: uploadedAt,
 	}
+	return resp, nil
+}
+
+func (st *BonusStorage) GetAllOrdersFromUser(req *modelStorage.GetAllOrdersFromUserRequest) (resp *modelStorage.GetAllOrdersFromUserResponse, err error) {
+	resp = &modelStorage.GetAllOrdersFromUserResponse{}
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	sqlStmt := `SELECT number, status, accural, uploaded_at FROM bonus.order WHERE user_id=$1`
+	sqlResult, err := st.connection.Query(ctx, sqlStmt, req.UserId)
+	if err != nil {
+		return nil, err
+	}
+	defer sqlResult.Close()
+
+	var orders []modelStorage.Order
+	for sqlResult.Next() {
+		var number int
+		var status string
+		var accural int
+		var uploadedAt time.Time
+		if err = sqlResult.Scan(&number, &status, &accural, &uploadedAt); err != nil {
+			return nil, err
+		}
+		order := modelStorage.Order{
+			Number:     number,
+			Status:     status,
+			Accural:    accural,
+			UploadedAt: uploadedAt,
+		}
+		orders = append(orders, order)
+	}
+	err = sqlResult.Err()
+	if err != nil {
+		return nil, err
+	}
+	resp.Orders = orders
 	return resp, nil
 }

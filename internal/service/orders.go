@@ -1,6 +1,7 @@
 package service
 
 import (
+	"strconv"
 	"time"
 
 	pkgService "github.com/HAGIT4/go-final/pkg/service"
@@ -40,6 +41,7 @@ func (sv *BonusService) UploadOrder(req *pkgService.UploadOrderRequest) (resp *p
 	dbReq := &modelStorage.UploadOrderRequest{
 		Number:     int(req.Order),
 		Status:     "NEW",
+		Accural:    0,
 		UserId:     userId,
 		UploadedAt: time.Now(),
 	}
@@ -50,6 +52,56 @@ func (sv *BonusService) UploadOrder(req *pkgService.UploadOrderRequest) (resp *p
 	}
 	resp.Status = pkgService.UploadOrderResponse_OK
 	return resp
+}
+
+func (sv *BonusService) GetAllOrdersFromUser(req *pkgService.GetOrderListRequest) (resp *pkgService.GetOrderListResponse) {
+	resp = &pkgService.GetOrderListResponse{}
+	userId, userFound, err := sv.getUserIdByUsername(req.Username)
+	if err != nil {
+		resp.Status = pkgService.GetOrderListResponse_INTERNAL_SERVER_ERROR
+		return resp
+	}
+	if !userFound {
+		resp.Status = pkgService.GetOrderListResponse_UNAUTHORIZED
+		return resp
+	}
+
+	orders, err := sv.getOrderListByUser(userId)
+	if err != nil {
+		resp.Status = pkgService.GetOrderListResponse_INTERNAL_SERVER_ERROR
+		return resp
+	}
+	if len(orders) == 0 {
+		resp.Status = pkgService.GetOrderListResponse_NO_DATA
+		return resp
+	}
+	resp.OrderInfo = orders
+	resp.Status = pkgService.GetOrderListResponse_OK
+	return resp
+}
+
+func (sv *BonusService) getOrderListByUser(userId int) (orders []*pkgService.OrderInfo, err error) {
+	dbReq := &modelStorage.GetAllOrdersFromUserRequest{
+		UserId: userId,
+	}
+	dbResp, err := sv.storage.GetAllOrdersFromUser(dbReq)
+	if err != nil {
+		return nil, err
+	}
+	orders = []*pkgService.OrderInfo{}
+	for _, order := range dbResp.Orders {
+		newNumber := strconv.Itoa(order.Number)
+		newAccural := float32(order.Accural) / 100
+		newTime := order.UploadedAt.String()
+		newOrder := pkgService.OrderInfo{
+			Number:     newNumber,
+			Status:     order.Status,
+			Accural:    newAccural,
+			UploadedAt: newTime,
+		}
+		orders = append(orders, &newOrder)
+	}
+	return orders, nil
 }
 
 func (sv *BonusService) getOrderByOrderId(orderId int64) (ordersUserId int, orderFound bool, err error) {

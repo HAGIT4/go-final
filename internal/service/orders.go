@@ -6,12 +6,19 @@ import (
 
 	pkgService "github.com/HAGIT4/go-final/pkg/service"
 	modelStorage "github.com/HAGIT4/go-final/pkg/storage/model"
+	goluhn "github.com/ShiraazMoollatjie/goluhn"
 )
 
 func (sv *BonusService) UploadOrder(req *pkgService.UploadOrderRequest) (resp *pkgService.UploadOrderResponse) {
 	resp = &pkgService.UploadOrderResponse{}
 
 	// TODO: Add order number validate (Luhn)
+	order := strconv.FormatInt(req.Order, 10)
+	err := goluhn.Validate(order)
+	if err != nil {
+		resp.Status = pkgService.UploadOrderResponse_BAD_ORDER_NUMBER
+		return resp
+	}
 
 	userId, userFound, err := sv.getUserIdByUsername(req.Username)
 	if err != nil {

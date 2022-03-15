@@ -30,3 +30,24 @@ type Withdrawal struct {
 type GetAllWithdrawalsByUserIdResponse struct {
 	Withdrawals []Withdrawal
 }
+
+type SetUserBalanceByUserIdRequest struct {
+	UserId    int
+	Current   int
+	Withdrawn int
+}
+
+type SetUserBalanceByUserIdResponse struct {
+}
+
+type AddWithdrawalRequest struct {
+	UserId      int
+	Current     int
+	Withdrawn   int
+	Sum         int
+	OrderId     int
+	ProcessedAt time.Time
+}
+
+type AddWithdrawalResponse struct {
+}

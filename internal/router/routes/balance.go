@@ -11,7 +11,7 @@ import (
 
 func AddBalanceRoutes(rg *gin.RouterGroup, sv service.BonusServiceInterface) {
 	rg.GET("/balance", middleware.AuthenticateUserMiddleware(sv), getBalanceHandler(sv))
-	rg.POST("/balance/withdraw", withdrawHandler(sv))
+	rg.POST("/balance/withdraw", middleware.AuthenticateUserMiddleware(sv), withdrawHandler(sv))
 	rg.POST("/balance/withdrawals", middleware.AuthenticateUserMiddleware(sv), getWithdrawalsInfoHandler(sv))
 }
 
@@ -41,6 +41,10 @@ func getBalanceHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 
 func withdrawHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 	h = func(c *gin.Context) {
+		username := c.GetString("username")
+		svReq := pkgService.WithdrawRequest{}
+		c.BindJSON(svReq)
+		svReq.Username = username
 
 	}
 	return
@@ -59,6 +63,9 @@ func getWithdrawalsInfoHandler(sv service.BonusServiceInterface) (h gin.HandlerF
 			return
 		case pkgService.GetAllWithdrawalsByUserResponse_NO_DATA:
 			c.Status(http.StatusNoContent)
+			return
+		case pkgService.GetAllWithdrawalsByUserResponse_UNAUTHORIZED:
+			c.Status(http.StatusUnauthorized)
 			return
 		case pkgService.GetAllWithdrawalsByUserResponse_INTERNAL_SERVER_ERROR:
 			c.AbortWithStatus(http.StatusInternalServerError)

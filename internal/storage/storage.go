@@ -66,7 +66,7 @@ func NewBonusStorage(cfg *pkgStorage.BonusStorageConfig) (st *BonusStorage, err 
 		id SERIAL PRIMARY KEY,
 		order_id INTEGER UNIQUE NOT NULL,
 		sum INTEGER NOT NULL,
-		user_id INTEGER,
+		user_id INTEGER NOT NULL,
 		processed_at TIMESTAMPTZ NOT NULL
 	)`)
 	if err != nil {

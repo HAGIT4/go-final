@@ -75,3 +75,47 @@ func (st *BonusStorage) GetAllWithdrawalsByUserId(req *modelStorage.GetAllWithdr
 	resp.Withdrawals = withdrawals
 	return resp, nil
 }
+
+func (st *BonusStorage) SetUserBalanceByUserId(req *modelStorage.SetUserBalanceByUserIdRequest) (resp *modelStorage.SetUserBalanceByUserIdResponse, err error) {
+	resp = &modelStorage.SetUserBalanceByUserIdResponse{}
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	sqlStmt := `UPDATE bonus.balance SET current=$1, withdrawn=$2 WHERE user_id=$3`
+	_, err = st.connection.Exec(ctx, sqlStmt, req.Current, req.Withdrawn, req.UserId)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (st *BonusStorage) AddWithdrawal(req *modelStorage.AddWithdrawalRequest) (resp *modelStorage.AddWithdrawalResponse, err error) {
+	resp = &modelStorage.AddWithdrawalResponse{}
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	tx, err := st.connection.Begin(ctx)
+	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback(ctx)
+
+	sqlStmtBalance := `UPDATE bonus.balance SET current=$1, withdrawn=$2 WHERE user_id=$3`
+	_, err = tx.Exec(ctx, sqlStmtBalance, req.Current, req.Withdrawn, req.UserId)
+	if err != nil {
+		return nil, err
+	}
+
+	sqlStmtWithdrawal := `INSERT INTO bonus.withdrawal (order_id, sum, user_id, processed_at)
+		VALUES ($1, $2, $3, $4)`
+	_, err = tx.Exec(ctx, sqlStmtWithdrawal, req.OrderId, req.Sum, req.OrderId, req.ProcessedAt)
+	if err != nil {
+		return nil, err
+	}
+
+	err = tx.Commit(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

@@ -18,7 +18,7 @@ func registerHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 	h = func(c *gin.Context) {
 		contentHeader := c.Request.Header.Get("Content-Type")
 		if contentHeader != "application/json" {
-			c.AbortWithStatus(http.StatusBadRequest) // add error
+			c.AbortWithStatus(http.StatusBadRequest)
 			return
 		}
 

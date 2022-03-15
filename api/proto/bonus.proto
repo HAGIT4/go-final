@@ -121,6 +121,7 @@ message GetUserBalanceResponse {
 message WithdrawRequest {
     string order = 1;
     float sum = 2;
+    string username = 3;
 }
 
 message WithdrawResponse {

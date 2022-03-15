@@ -12,7 +12,6 @@ import (
 func (sv *BonusService) UploadOrder(req *pkgService.UploadOrderRequest) (resp *pkgService.UploadOrderResponse) {
 	resp = &pkgService.UploadOrderResponse{}
 
-	// TODO: Add order number validate (Luhn)
 	order := strconv.FormatInt(req.Order, 10)
 	err := goluhn.Validate(order)
 	if err != nil {

@@ -42,10 +42,27 @@ func getBalanceHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 func withdrawHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 	h = func(c *gin.Context) {
 		username := c.GetString("username")
-		svReq := pkgService.WithdrawRequest{}
+		svReq := &pkgService.WithdrawRequest{}
 		c.BindJSON(svReq)
 		svReq.Username = username
-
+		svResp := sv.Withdraw(svReq)
+		switch svResp.GetStatus() {
+		case pkgService.WithdrawResponse_OK:
+			c.Status(http.StatusOK)
+			return
+		case pkgService.WithdrawResponse_UNAUTHORIZED:
+			c.Status(http.StatusUnauthorized)
+			return
+		case pkgService.WithdrawResponse_INSUFFICIENT_FUNDS:
+			c.Status(http.StatusPaymentRequired)
+			return
+		case pkgService.WithdrawResponse_BAD_ORDER_NUMBER:
+			c.Status(http.StatusUnprocessableEntity)
+			return
+		case pkgService.WithdrawResponse_INTERNAL_SERVER_ERROR:
+			c.Status(http.StatusInternalServerError)
+			return
+		}
 	}
 	return
 }

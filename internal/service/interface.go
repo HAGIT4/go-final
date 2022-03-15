@@ -10,4 +10,5 @@ type BonusServiceInterface interface {
 	UploadOrder(req *pkgService.UploadOrderRequest) (resp *pkgService.UploadOrderResponse)
 	GetAllOrdersFromUser(req *pkgService.GetOrderListRequest) (resp *pkgService.GetOrderListResponse)
 	GetUserWithdrawals(req *pkgService.GetAllWithdrawalsByUserRequest) (resp *pkgService.GetAllWithdrawalsByUserResponse)
+	Withdraw(req *pkgService.WithdrawRequest) (resp *pkgService.WithdrawResponse)
 }

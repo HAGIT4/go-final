@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"strconv"
@@ -36,7 +35,26 @@ func uploadOrderHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 			Username: username,
 		}
 		svResp := sv.UploadOrder(svReq)
-		fmt.Print(svResp.Status) // >????
+		switch svResp.GetStatus() {
+		case pkgService.UploadOrderResponse_ALREADY_UPLOADED_BY_THIS_USER:
+			c.Status(http.StatusOK)
+			return
+		case pkgService.UploadOrderResponse_OK:
+			c.Status(http.StatusAccepted)
+			return
+		case pkgService.UploadOrderResponse_BAD_REQUEST:
+			c.Status(http.StatusBadRequest)
+			return
+		case pkgService.UploadOrderResponse_UNAUTHORIZED:
+			c.Status(http.StatusUnauthorized)
+			return
+		case pkgService.UploadOrderResponse_ALREADY_UPLOADED_BY_ANOTHER_USER:
+			c.Status(http.StatusUnprocessableEntity)
+			return
+		case pkgService.UploadOrderResponse_INTERNAL_SERVER_ERROR:
+			c.Status(http.StatusInternalServerError)
+			return
+		}
 	}
 	return
 }

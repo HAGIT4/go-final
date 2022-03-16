@@ -38,3 +38,19 @@ type Order struct {
 type GetAllOrdersFromUserResponse struct {
 	Orders []Order
 }
+
+type GetOrdersForProcessRequest struct {
+}
+
+type ProcessedOrder struct {
+	Number int
+	UserId int
+}
+
+type GetOrdersForProcessResponse struct {
+	ProcessedOrders []ProcessedOrder
+}
+
+type MarkNewWithProcessingRequest struct{}
+
+type MarkNewWithProcessingResponse struct{}

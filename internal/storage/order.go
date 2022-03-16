@@ -90,3 +90,48 @@ func (st *BonusStorage) GetAllOrdersFromUser(req *modelStorage.GetAllOrdersFromU
 	resp.Orders = orders
 	return resp, nil
 }
+
+func (st *BonusStorage) GetOrdersForProcess(req *modelStorage.GetOrdersForProcessRequest) (resp *modelStorage.GetOrdersForProcessResponse, err error) {
+	resp = &modelStorage.GetOrdersForProcessResponse{}
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	sqlStmt := `SELECT number, user_id FROM bonus.order WHERE status='NEW' OR status='PROCESSING'`
+	sqlResult, err := st.connection.Query(ctx, sqlStmt)
+	if err != nil {
+		return nil, err
+	}
+	defer sqlResult.Close()
+
+	var orders []modelStorage.ProcessedOrder
+	for sqlResult.Next() {
+		var orderNumber, orderUserId int
+		if err = sqlResult.Scan(&orderNumber, &orderUserId); err != nil {
+			return nil, err
+		}
+		order := modelStorage.ProcessedOrder{
+			Number: orderNumber,
+			UserId: orderUserId,
+		}
+		orders = append(orders, order)
+	}
+	err = sqlResult.Err()
+	if err != nil {
+		return nil, err
+	}
+	resp.ProcessedOrders = orders
+	return resp, nil
+}
+
+func (st *BonusStorage) MarkNewWithProcessing(req *modelStorage.MarkNewWithProcessingRequest) (resp *modelStorage.MarkNewWithProcessingResponse, err error) {
+	resp = &modelStorage.MarkNewWithProcessingResponse{}
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	sqlStmt := `UPDATE bonus.order SET status = 'PROCESSING WHERE status = 'NEW'`
+	_, err = st.connection.Exec(ctx, sqlStmt)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

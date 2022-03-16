@@ -11,4 +11,5 @@ type BonusServiceInterface interface {
 	GetAllOrdersFromUser(req *pkgService.GetOrderListRequest) (resp *pkgService.GetOrderListResponse)
 	GetUserWithdrawals(req *pkgService.GetAllWithdrawalsByUserRequest) (resp *pkgService.GetAllWithdrawalsByUserResponse)
 	Withdraw(req *pkgService.WithdrawRequest) (resp *pkgService.WithdrawResponse)
+	ProcessOrders() (err error)
 }

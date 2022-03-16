@@ -62,6 +62,11 @@ func (bs *bonusServer) ListenAndServe() (err error) {
 			log.Fatal(err) // user errgroup
 		}
 	}()
+	go func() {
+		if err := bs.service.ProcessOrders(); err != nil {
+			log.Fatal(err)
+		}
+	}()
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT)
 	<-quit

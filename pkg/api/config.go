@@ -10,7 +10,7 @@ import (
 type APIConfig struct {
 	RunAddress           string `env:"RUN_ADDRESS"`
 	DatabaseUri          string `env:"DATABASE_URI"`
-	AccuralSystemAddress string `env:"ACCURAL_SYSTEM_ADDRESS"`
+	AccuralSystemAddress string `env:"ACCRUAL_SYSTEM_ADDRESS"`
 }
 
 func (cfg *APIConfig) Validate() (err error) {
@@ -29,7 +29,7 @@ var (
 func InitConfig() (cfg *APIConfig, err error) {
 	runAddressFlag = flag.String("a", "", "Server address:port")
 	databaseUriFlag = flag.String("d", "", "Database URI")
-	accuralSystemAddressFlag = flag.String("r", "", "Accural system address")
+	accuralSystemAddressFlag = flag.String("r", "", "Accrual system address")
 	flag.Parse()
 
 	cfg = &APIConfig{}

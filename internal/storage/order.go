@@ -128,7 +128,7 @@ func (st *BonusStorage) MarkNewWithProcessing(req *modelStorage.MarkNewWithProce
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	sqlStmt := `UPDATE bonus.order SET status = 'PROCESSING WHERE status = 'NEW'`
+	sqlStmt := `UPDATE bonus.order SET status = 'PROCESSING' WHERE status = 'NEW'`
 	_, err = st.connection.Exec(ctx, sqlStmt)
 	if err != nil {
 		return nil, err

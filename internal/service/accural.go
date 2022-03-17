@@ -45,6 +45,25 @@ func (sv *BonusService) ProcessOrders() (err error) {
 		}
 	}
 
+	for _, order := range readyOrders {
+		o := order
+		if err := sv.updateOrder(o.Number, o.Status, o.Accural); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (sv *BonusService) updateOrder(number int, status string, accrual float32) (err error) {
+	dbReq := modelStorage.UpdateOrderRequest{
+		Number:  number,
+		Status:  status,
+		Accural: int(accrual * 100),
+	}
+	if _, err := sv.storage.UpdateOrder(&dbReq); err != nil {
+		return err
+	}
 	return nil
 }
 

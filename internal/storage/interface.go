@@ -16,4 +16,5 @@ type BonusStorageInterface interface {
 	AddWithdrawal(req *modelStorage.AddWithdrawalRequest) (resp *modelStorage.AddWithdrawalResponse, err error)
 	GetOrdersForProcess(req *modelStorage.GetOrdersForProcessRequest) (resp *modelStorage.GetOrdersForProcessResponse, err error)
 	MarkNewWithProcessing(req *modelStorage.MarkNewWithProcessingRequest) (resp *modelStorage.MarkNewWithProcessingResponse, err error)
+	UpdateOrder(req *modelStorage.UpdateOrderRequest) (resp *modelStorage.UpdateOrderResponse, err error)
 }

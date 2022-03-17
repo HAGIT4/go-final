@@ -54,3 +54,12 @@ type GetOrdersForProcessResponse struct {
 type MarkNewWithProcessingRequest struct{}
 
 type MarkNewWithProcessingResponse struct{}
+
+type UpdateOrderRequest struct {
+	Number  int
+	Status  string
+	Accural int
+}
+
+type UpdateOrderResponse struct {
+}

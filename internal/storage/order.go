@@ -135,3 +135,16 @@ func (st *BonusStorage) MarkNewWithProcessing(req *modelStorage.MarkNewWithProce
 	}
 	return resp, nil
 }
+
+func (st *BonusStorage) UpdateOrder(req *modelStorage.UpdateOrderRequest) (resp *modelStorage.UpdateOrderResponse, err error) {
+	resp = &modelStorage.UpdateOrderResponse{}
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	sqlStmt := `UPDATE bonus.order SET status = $1, accural = $2 WHERE number = $3`
+	_, err = st.connection.Exec(ctx, sqlStmt)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

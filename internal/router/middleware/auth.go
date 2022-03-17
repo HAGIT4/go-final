@@ -10,7 +10,11 @@ import (
 
 func AuthenticateUserMiddleware(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 	h = func(c *gin.Context) {
-		authHeader := c.Request.Header["Authorization"][0]
+		var authHeader string
+		if authHeader = c.Request.Header.Get("Authorization"); len(authHeader) == 0 {
+			c.AbortWithStatus(http.StatusUnauthorized)
+			return
+		}
 		authReq := &pkgService.AuthRequest{
 			Token: authHeader,
 		}

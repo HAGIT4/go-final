@@ -112,7 +112,7 @@ func (sv *BonusService) getOrderListByUser(userId int) (orders []*pkgService.Ord
 
 func (sv *BonusService) getOrderByOrderId(orderId int64) (ordersUserId int, orderFound bool, err error) {
 	dbReq := &modelStorage.GetOrderByOrderIdRequest{
-		OrderId: int(orderId),
+		OrderId: int64(orderId),
 	}
 	dbResp, err := sv.storage.GetOrderByOrderId(dbReq)
 	if err != nil {

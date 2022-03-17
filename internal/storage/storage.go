@@ -4,12 +4,12 @@ import (
 	"context"
 
 	pkgStorage "github.com/HAGIT4/go-final/pkg/storage"
-	pgx "github.com/jackc/pgx/v4"
+	pgxpool "github.com/jackc/pgx/v4/pgxpool"
 )
 
 type BonusStorage struct {
 	connectionString string
-	connection       *pgx.Conn
+	connection       *pgxpool.Pool
 }
 
 var _ BonusStorageInterface = (*BonusStorage)(nil)
@@ -18,15 +18,20 @@ func NewBonusStorage(cfg *pkgStorage.BonusStorageConfig) (st *BonusStorage, err 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	connCfg, err := pgx.ParseConfig(cfg.ConnectionString)
+	connCfg, err := pgxpool.ParseConfig(cfg.ConnectionString)
 	if err != nil {
 		return nil, err
 	}
 
-	conn, err := pgx.ConnectConfig(ctx, connCfg)
+	conn, err := pgxpool.ConnectConfig(ctx, connCfg)
 	if err != nil {
 		return nil, err
 	}
+
+	// conn, err := pgx.ConnectConfig(ctx, connCfg)
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	_, err = conn.Exec(ctx, "CREATE SCHEMA IF NOT EXISTS bonus")
 	if err != nil {
@@ -44,9 +49,9 @@ func NewBonusStorage(cfg *pkgStorage.BonusStorageConfig) (st *BonusStorage, err 
 
 	_, err = conn.Exec(ctx, `CREATE TABLE IF NOT EXISTS bonus.balance (
 		id SERIAL PRIMARY KEY,
-		user_id INTEGER UNIQUE,
-		current INTEGER,
-		withdrawn INTEGER
+		user_id BIGINT UNIQUE,
+		current BIGINT,
+		withdrawn BIGINT
 	)`)
 	if err != nil {
 		return nil, err
@@ -55,18 +60,18 @@ func NewBonusStorage(cfg *pkgStorage.BonusStorageConfig) (st *BonusStorage, err 
 	_, err = conn.Exec(ctx, `CREATE TYPE order_status as ENUM ('NEW', 'PROCESSING', 'INVALID', 'PROCESSED');
 		CREATE TABLE IF NOT EXISTS bonus.order (
 		id SERIAL PRIMARY KEY,
-		number INTEGER UNIQUE NOT NULL,
+		number BIGINT UNIQUE NOT NULL,
 		status order_status NOT NULL,
-		accural INTEGER,
-		user_id INTEGER NOT NULL,
+		accural BIGINT,
+		user_id BIGINT NOT NULL,
 		uploaded_at TIMESTAMPTZ NOT NULL
 	)`)
 
 	_, err = conn.Exec(ctx, `CREATE TABLE IF NOT EXISTS bonus.withdrawal (
 		id SERIAL PRIMARY KEY,
-		order_id INTEGER UNIQUE NOT NULL,
-		sum INTEGER NOT NULL,
-		user_id INTEGER NOT NULL,
+		order_id BIGINT UNIQUE NOT NULL,
+		sum BIGINT NOT NULL,
+		user_id BIGINT NOT NULL,
 		processed_at TIMESTAMPTZ NOT NULL
 	)`)
 	if err != nil {

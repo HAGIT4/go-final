@@ -45,6 +45,9 @@ func uploadOrderHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 		case pkgService.UploadOrderResponse_BAD_REQUEST:
 			c.Status(http.StatusBadRequest)
 			return
+		case pkgService.UploadOrderResponse_BAD_ORDER_NUMBER:
+			c.Status(http.StatusUnprocessableEntity)
+			return
 		case pkgService.UploadOrderResponse_UNAUTHORIZED:
 			c.Status(http.StatusUnauthorized)
 			return
@@ -53,6 +56,9 @@ func uploadOrderHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 			return
 		case pkgService.UploadOrderResponse_INTERNAL_SERVER_ERROR:
 			c.Status(http.StatusInternalServerError)
+			return
+		default:
+			c.AbortWithStatus(http.StatusInternalServerError)
 			return
 		}
 	}

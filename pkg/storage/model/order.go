@@ -15,7 +15,7 @@ type UploadOrderRequest struct {
 type UploadOrderResponse struct{}
 
 type GetOrderByOrderIdRequest struct {
-	OrderId int
+	OrderId int64
 }
 
 type GetOrderByOrderIdResponse struct {

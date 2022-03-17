@@ -14,44 +14,45 @@ type OrderToWrite struct {
 }
 
 func (sv *BonusService) ProcessOrders() (err error) {
-	ordersForProcess, err := sv.getOrdersForProcess()
-	if err != nil {
-		return err
-	}
-	if err = sv.markNewWithProcessing(); err != nil {
-		return err
-	}
-	var ordersProcessed []OrderToWrite
-	m := sync.Mutex{}
-	var wg sync.WaitGroup
-	for _, order := range ordersForProcess {
-		o := order
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			orderToWrite := sv.processOrder(&o)
-			m.Lock()
-			ordersProcessed = append(ordersProcessed, *orderToWrite)
-			m.Unlock()
-		}()
-	}
-	wg.Wait()
-
-	var readyOrders []OrderToWrite
-	for _, order := range ordersProcessed {
-		o := order
-		if o.Action == "ok" {
-			readyOrders = append(readyOrders, o)
-		}
-	}
-
-	for _, order := range readyOrders {
-		o := order
-		if err := sv.updateOrder(o.Number, o.Status, o.Accural); err != nil {
+	for range sv.updateTicker.C {
+		ordersForProcess, err := sv.getOrdersForProcess()
+		if err != nil {
 			return err
 		}
-	}
+		if err = sv.markNewWithProcessing(); err != nil {
+			return err
+		}
+		var ordersProcessed []OrderToWrite
+		m := sync.Mutex{}
+		var wg sync.WaitGroup
+		for _, order := range ordersForProcess {
+			o := order
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				orderToWrite := sv.processOrder(&o)
+				m.Lock()
+				ordersProcessed = append(ordersProcessed, *orderToWrite)
+				m.Unlock()
+			}()
+		}
+		wg.Wait()
 
+		var readyOrders []OrderToWrite
+		for _, order := range ordersProcessed {
+			o := order
+			if o.Action == "ok" {
+				readyOrders = append(readyOrders, o)
+			}
+		}
+
+		for _, order := range readyOrders {
+			o := order
+			if err := sv.updateOrder(o.Number, o.Status, o.Accural); err != nil {
+				return err
+			}
+		}
+	}
 	return nil
 }
 

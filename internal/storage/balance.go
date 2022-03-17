@@ -18,10 +18,12 @@ func (st *BonusStorage) GetBalanceByUserId(req *modelStorage.GetBalanceByUserIdR
 	defer sqlResult.Close()
 
 	var current, withdrawn int
+	var found bool
 	for sqlResult.Next() {
 		if err = sqlResult.Scan(&current, &withdrawn); err != nil {
 			return nil, err
 		}
+		found = true
 	}
 	err = sqlResult.Err()
 	if err != nil {
@@ -33,7 +35,7 @@ func (st *BonusStorage) GetBalanceByUserId(req *modelStorage.GetBalanceByUserIdR
 			Current:   current,
 			Withdrawn: withdrawn,
 		},
-		Found: true,
+		Found: found,
 	}
 	return resp, nil
 }
@@ -114,6 +116,19 @@ func (st *BonusStorage) AddWithdrawal(req *modelStorage.AddWithdrawalRequest) (r
 	}
 
 	err = tx.Commit(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (st *BonusStorage) AddUserBalance(req *modelStorage.AddUserBalanceRequest) (resp *modelStorage.AddUserBalanceResponse, err error) {
+	resp = &modelStorage.AddUserBalanceResponse{}
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	sqlStmt := `INSERT INTO bonus.balance (user_id, current, withdrawn) VALUES ($1, 0, 0)`
+	_, err = st.connection.Exec(ctx, sqlStmt, req.UserId)
 	if err != nil {
 		return nil, err
 	}

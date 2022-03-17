@@ -49,9 +49,9 @@ func NewBonusStorage(cfg *pkgStorage.BonusStorageConfig) (st *BonusStorage, err 
 
 	_, err = conn.Exec(ctx, `CREATE TABLE IF NOT EXISTS bonus.balance (
 		id SERIAL PRIMARY KEY,
-		user_id BIGINT UNIQUE,
-		current BIGINT,
-		withdrawn BIGINT
+		user_id BIGINT UNIQUE NOT NULL,
+		current BIGINT NOT NULL,
+		withdrawn BIGINT NOT NULL
 	)`)
 	if err != nil {
 		return nil, err

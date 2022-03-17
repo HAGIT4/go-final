@@ -51,3 +51,10 @@ type AddWithdrawalRequest struct {
 
 type AddWithdrawalResponse struct {
 }
+
+type AddUserBalanceRequest struct {
+	UserId int
+}
+
+type AddUserBalanceResponse struct {
+}

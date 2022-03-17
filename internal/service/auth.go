@@ -39,6 +39,21 @@ func (sv *BonusService) Register(req *pkgService.RegisterRequest) (resp *pkgServ
 		return resp
 	}
 
+	userId, found, err := sv.getUserIdByUsername(req.Login)
+	if err != nil || !found {
+		resp.Status = pkgService.RegisterResponse_INTERNAL_SERVEL_ERROR
+		return resp
+	}
+
+	dbAddBalanceReq := &modelStorage.AddUserBalanceRequest{
+		UserId: userId,
+	}
+	_, err = sv.storage.AddUserBalance(dbAddBalanceReq)
+	if err != nil {
+		resp.Status = pkgService.RegisterResponse_INTERNAL_SERVEL_ERROR
+		return resp
+	}
+
 	token, err := sv.authService.GenerateToken(req.Login)
 	if err != nil {
 		resp.Status = pkgService.RegisterResponse_INTERNAL_SERVEL_ERROR
@@ -48,8 +63,6 @@ func (sv *BonusService) Register(req *pkgService.RegisterRequest) (resp *pkgServ
 		Status:    pkgService.RegisterResponse_OK,
 		AuthToken: token,
 	}
-
-	//add balance and user
 
 	return resp
 }

@@ -52,7 +52,7 @@ func uploadOrderHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 			c.Status(http.StatusUnauthorized)
 			return
 		case pkgService.UploadOrderResponse_ALREADY_UPLOADED_BY_ANOTHER_USER:
-			c.Status(http.StatusUnprocessableEntity)
+			c.Status(http.StatusConflict)
 			return
 		case pkgService.UploadOrderResponse_INTERNAL_SERVER_ERROR:
 			c.Status(http.StatusInternalServerError)

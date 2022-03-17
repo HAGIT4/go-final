@@ -35,7 +35,12 @@ func (sv *BonusService) UploadOrder(req *pkgService.UploadOrderRequest) (resp *p
 		return resp
 	}
 	if orderFound {
-		if ordersUserId != int(req.Order) {
+		reqUsername, err := strconv.Atoi(req.Username)
+		if err != nil {
+			resp.Status = pkgService.UploadOrderResponse_INTERNAL_SERVER_ERROR
+			return resp
+		}
+		if ordersUserId != reqUsername {
 			resp.Status = pkgService.UploadOrderResponse_ALREADY_UPLOADED_BY_ANOTHER_USER
 			return resp
 		} else {

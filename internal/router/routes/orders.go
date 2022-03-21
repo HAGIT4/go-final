@@ -77,10 +77,10 @@ func getOrderListHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 			c.AbortWithStatus(http.StatusInternalServerError)
 			return
 		case pkgService.GetOrderListResponse_NO_DATA:
+			c.Header("Content-type", "application/json")
 			c.Status(http.StatusNoContent)
 			return
 		case pkgService.GetOrderListResponse_OK:
-			c.Header("Content-type", "application/json")
 			c.JSON(http.StatusOK, svResp.OrderInfo)
 			return
 		}

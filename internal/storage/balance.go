@@ -45,7 +45,8 @@ func (st *BonusStorage) GetAllWithdrawalsByUserId(req *modelStorage.GetAllWithdr
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	sqlStmt := `SELECT order_id, sum, user_id, processed_at FROM bonus.withdrawal WHERE user_id=$1`
+	sqlStmt := `SELECT order_id, sum, user_id, processed_at FROM bonus.withdrawal WHERE user_id=$1
+		ORDER BY processed_at ASC`
 	sqlResult, err := st.connection.Query(ctx, sqlStmt, req.UserId)
 	if err != nil {
 		return nil, err

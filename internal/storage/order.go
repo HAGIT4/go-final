@@ -59,7 +59,8 @@ func (st *BonusStorage) GetAllOrdersFromUser(req *modelStorage.GetAllOrdersFromU
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	sqlStmt := `SELECT number, status, accural, uploaded_at FROM bonus.order WHERE user_id=$1`
+	sqlStmt := `SELECT number, status, accural, uploaded_at FROM bonus.order WHERE user_id=$1
+		ORDER BY uploaded_at ASC`
 	sqlResult, err := st.connection.Query(ctx, sqlStmt, req.UserId)
 	if err != nil {
 		return nil, err

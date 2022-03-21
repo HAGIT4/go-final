@@ -82,6 +82,9 @@ func getOrderListHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 		case pkgService.GetOrderListResponse_OK:
 			c.JSON(http.StatusOK, svResp.OrderInfo)
 			return
+		default:
+			c.AbortWithStatus(http.StatusInternalServerError)
+			return
 		}
 	}
 	return

@@ -8,7 +8,8 @@ import (
 )
 
 const (
-	bcryptCost int = 8
+	bcryptCost int           = 8
+	updateTime time.Duration = 5 * time.Second
 )
 
 type BonusService struct {
@@ -27,7 +28,7 @@ func NewBonusService(cfg *pkgService.BonusServiceConfig) (sv *BonusService, err 
 	if err != nil {
 		return nil, err
 	}
-	t := time.NewTicker(5 * time.Second)
+	t := time.NewTicker(updateTime)
 	sv = &BonusService{
 		storage:       cfg.Storage,
 		authService:   asv,

@@ -28,11 +28,6 @@ func NewBonusStorage(cfg *pkgStorage.BonusStorageConfig) (st *BonusStorage, err 
 		return nil, err
 	}
 
-	// conn, err := pgx.ConnectConfig(ctx, connCfg)
-	// if err != nil {
-	// 	return nil, err
-	// }
-
 	_, err = conn.Exec(ctx, "CREATE SCHEMA IF NOT EXISTS bonus")
 	if err != nil {
 		return nil, err

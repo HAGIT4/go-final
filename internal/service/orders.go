@@ -98,7 +98,7 @@ func (sv *BonusService) getOrderListByUser(userId int) (orders []*pkgService.Ord
 	for _, order := range dbResp.Orders {
 		newNumber := strconv.Itoa(order.Number)
 		newAccural := float32(order.Accural) / 100
-		newTime := order.UploadedAt.String()
+		newTime := order.UploadedAt.Format(time.RFC3339)
 		newOrder := pkgService.OrderInfo{
 			Number:     newNumber,
 			Status:     order.Status,

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"strconv"
 	"time"
 
@@ -82,6 +83,7 @@ func (sv *BonusService) GetAllOrdersFromUser(req *pkgService.GetOrderListRequest
 		return resp
 	}
 	resp.OrderInfo = orders
+	fmt.Println(orders)
 	resp.Status = pkgService.GetOrderListResponse_OK
 	return resp
 }

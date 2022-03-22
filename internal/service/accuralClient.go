@@ -32,6 +32,7 @@ func NewAccuralClient(address string) (client *accuralClient, err error) {
 func (cl *accuralClient) GetOrderInfo(number int) (resp *GetOrderInfoResponse) {
 	resp = &GetOrderInfoResponse{}
 	url := fmt.Sprintf("http://%s/api/orders/%d", cl.accuralAddress, number)
+	fmt.Println("URL:", url)
 	getResp, err := http.Get(url)
 	if err != nil {
 		resp.Action = "retry"
@@ -40,6 +41,7 @@ func (cl *accuralClient) GetOrderInfo(number int) (resp *GetOrderInfoResponse) {
 	switch getResp.StatusCode {
 	case 200:
 		body, err := io.ReadAll(getResp.Body)
+		fmt.Println("Body:", string(body))
 		if err != nil {
 			resp.Action = "retry"
 			return resp

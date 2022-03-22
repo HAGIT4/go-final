@@ -8,7 +8,7 @@ type Balance struct {
 }
 
 type GetBalanceByUserIdRequest struct {
-	UserId int
+	UserID int
 }
 
 type GetBalanceByUserIdResponse struct {

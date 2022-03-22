@@ -143,7 +143,7 @@ func (sv *BonusService) getWithdrawalsByUserId(userId int) (witdrawalsList []*pk
 
 func (sv *BonusService) getBalanceByUserId(userId int) (current float32, withdrawn float32, found bool, err error) {
 	dbReq := &modelStorage.GetBalanceByUserIdRequest{
-		UserId: userId,
+		UserID: userId,
 	}
 	dbResp, err := sv.storage.GetBalanceByUserId(dbReq)
 	if err != nil {

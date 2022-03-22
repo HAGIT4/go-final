@@ -11,7 +11,7 @@ func (st *BonusStorage) GetBalanceByUserId(req *modelStorage.GetBalanceByUserIdR
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	sqlResult, err := st.connection.Query(ctx, "SELECT current, withdrawn FROM bonus.balance WHERE user_id=$1", req.UserId)
+	sqlResult, err := st.connection.Query(ctx, "SELECT current, withdrawn FROM bonus.balance WHERE user_id=$1", req.UserID)
 	if err != nil {
 		return nil, err
 	}

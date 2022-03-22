@@ -49,8 +49,15 @@ func (cl *accuralClient) GetOrderInfo(number int) (resp *GetOrderInfoResponse) {
 			resp.Action = "retry"
 			return resp
 		}
-		resp.Action = "ok"
-		return resp
+
+		if resp.Status == "PROCESSED" || resp.Status == "INVALID" {
+			resp.Action = "ok"
+			return resp
+		} else {
+			resp.Action = "retry"
+			return resp
+		}
+
 	case 429:
 		resp.Action = "retry"
 		return resp

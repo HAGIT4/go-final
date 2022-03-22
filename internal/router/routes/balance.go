@@ -28,7 +28,7 @@ func getBalanceHandler(sv service.BonusServiceInterface) (h gin.HandlerFunc) {
 			c.JSON(http.StatusOK, *svResp)
 			return
 		case pkgService.GetUserBalanceResponse_UNAUTHORIZED:
-			svResp.Status = 0 // maybe new error type
+			svResp.Status = 0
 			c.AbortWithStatus(http.StatusUnauthorized)
 		case pkgService.GetUserBalanceResponse_INTERNAL_SERVER_ERROR:
 			err := NewBonusRouterInternalServerError()

@@ -31,7 +31,7 @@ func NewAccuralClient(address string) (client *accuralClient, err error) {
 
 func (cl *accuralClient) GetOrderInfo(number int) (resp *GetOrderInfoResponse) {
 	resp = &GetOrderInfoResponse{}
-	url := fmt.Sprintf("http://%s/api/orders/%d", cl.accuralAddress, number)
+	url := fmt.Sprintf("%s/api/orders/%d", cl.accuralAddress, number)
 	fmt.Println("URL:", url)
 	getResp, err := http.Get(url)
 	if err != nil {

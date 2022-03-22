@@ -38,6 +38,22 @@ func (sv *BonusService) GetUserBalance(req *pkgService.GetUserBalanceRequest) (r
 	return resp
 }
 
+func (sv *BonusService) addSumToUserBalance(userID int, accrual float32) (err error) {
+
+	balance, _, _, err := sv.getBalanceByUserId(userID)
+	if err != nil {
+		return err
+	}
+	dbReq := &modelStorage.AddSumToUserBalanceRequest{
+		UserID: userID,
+		Sum:    int(balance*100) + int(accrual*100),
+	}
+	if _, err = sv.storage.AddSumToUserBalance(dbReq); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (sv *BonusService) GetUserWithdrawals(req *pkgService.GetAllWithdrawalsByUserRequest) (resp *pkgService.GetAllWithdrawalsByUserResponse) {
 	resp = &pkgService.GetAllWithdrawalsByUserResponse{}
 	username := req.Username

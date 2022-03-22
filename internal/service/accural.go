@@ -12,6 +12,7 @@ type OrderToWrite struct {
 	Accural float32
 	Status  string
 	Action  string
+	UserId  int
 }
 
 func (sv *BonusService) ProcessOrders() (err error) {
@@ -52,6 +53,9 @@ func (sv *BonusService) ProcessOrders() (err error) {
 			if err := sv.updateOrder(o.Number, o.Status, o.Accural); err != nil {
 				return err
 			}
+			if err := sv.addSumToUserBalance(o.UserId, o.Accural); err != nil {
+				return err
+			}
 		}
 	}
 	return nil
@@ -86,6 +90,7 @@ func (sv *BonusService) processOrder(orderToProcess *modelStorage.ProcessedOrder
 		Accural: resp.Accural,
 		Status:  resp.Status,
 		Action:  resp.Action,
+		UserId:  orderToProcess.UserId,
 	}
 	return orderToWrite
 }

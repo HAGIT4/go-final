@@ -18,4 +18,5 @@ type BonusStorageInterface interface {
 	GetOrdersForProcess(req *modelStorage.GetOrdersForProcessRequest) (resp *modelStorage.GetOrdersForProcessResponse, err error)
 	MarkNewWithProcessing(req *modelStorage.MarkNewWithProcessingRequest) (resp *modelStorage.MarkNewWithProcessingResponse, err error)
 	UpdateOrder(req *modelStorage.UpdateOrderRequest) (resp *modelStorage.UpdateOrderResponse, err error)
+	AddSumToUserBalance(req *modelStorage.AddSumToUserBalanceRequest) (resp *modelStorage.AddSumToUserBalanceResponse, err error)
 }

@@ -58,3 +58,11 @@ type AddUserBalanceRequest struct {
 
 type AddUserBalanceResponse struct {
 }
+
+type AddSumToUserBalanceRequest struct {
+	UserID int
+	Sum    int
+}
+
+type AddSumToUserBalanceResponse struct {
+}

@@ -135,3 +135,16 @@ func (st *BonusStorage) AddUserBalance(req *modelStorage.AddUserBalanceRequest) 
 	}
 	return resp, nil
 }
+
+func (st *BonusStorage) AddSumToUserBalance(req *modelStorage.AddSumToUserBalanceRequest) (resp *modelStorage.AddSumToUserBalanceResponse, err error) {
+	resp = &modelStorage.AddSumToUserBalanceResponse{}
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	sqlStmt := `UPDATE bonus.balance SET current=$1 WHERE user_id=$2`
+	_, err = st.connection.Exec(ctx, sqlStmt, req.Sum, req.UserID)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

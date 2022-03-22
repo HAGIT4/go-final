@@ -8,9 +8,9 @@ import (
 )
 
 type GetOrderInfoResponse struct {
-	Order   int     `json:"order"`
+	Order   string  `json:"order"`
 	Status  string  `json:"status"`
-	Accural float32 `json:"accural,omitempty"`
+	Accural float32 `json:"accrual,omitempty"`
 	Action  string
 }
 
@@ -31,7 +31,7 @@ func NewAccuralClient(address string) (client *accuralClient, err error) {
 
 func (cl *accuralClient) GetOrderInfo(number int) (resp *GetOrderInfoResponse) {
 	resp = &GetOrderInfoResponse{}
-	url := fmt.Sprintf("%s/api/orders/%d", cl.accuralAddress, number)
+	url := fmt.Sprintf("http://%s/api/orders/%d", cl.accuralAddress, number)
 	getResp, err := http.Get(url)
 	if err != nil {
 		resp.Action = "retry"
@@ -49,7 +49,7 @@ func (cl *accuralClient) GetOrderInfo(number int) (resp *GetOrderInfoResponse) {
 			resp.Action = "retry"
 			return resp
 		}
-		resp.Status = "ok"
+		resp.Action = "ok"
 		return resp
 	case 429:
 		resp.Action = "retry"

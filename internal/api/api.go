@@ -59,7 +59,7 @@ func NewBonusServer(cfg *pkgApi.APIConfig) (bs *bonusServer, err error) {
 func (bs *bonusServer) ListenAndServe() (err error) {
 	go func() {
 		if err := bs.router.Run(); err != nil {
-			log.Fatal(err) // user errgroup
+			log.Fatal(err)
 		}
 	}()
 	go func() {

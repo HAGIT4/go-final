@@ -143,7 +143,7 @@ func (st *BonusStorage) UpdateOrder(req *modelStorage.UpdateOrderRequest) (resp 
 	defer cancel()
 
 	sqlStmt := `UPDATE bonus.order SET status = $1, accural = $2 WHERE number = $3`
-	_, err = st.connection.Exec(ctx, sqlStmt)
+	_, err = st.connection.Exec(ctx, sqlStmt, req.Status, req.Accural, req.Number)
 	if err != nil {
 		return nil, err
 	}

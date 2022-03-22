@@ -1,6 +1,7 @@
 package service
 
 import (
+	"strconv"
 	"sync"
 
 	modelStorage "github.com/HAGIT4/go-final/pkg/storage/model"
@@ -79,8 +80,9 @@ func (sv *BonusService) markNewWithProcessing() (err error) {
 
 func (sv *BonusService) processOrder(orderToProcess *modelStorage.ProcessedOrder) (orderToWrite *OrderToWrite) {
 	resp := sv.accuralClient.GetOrderInfo(orderToProcess.Number)
+	order, _ := strconv.Atoi(resp.Order)
 	orderToWrite = &OrderToWrite{
-		Number:  resp.Order,
+		Number:  order,
 		Accural: resp.Accural,
 		Status:  resp.Status,
 		Action:  resp.Action,

@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -34,6 +35,7 @@ func NewBonusServer(cfg *pkgApi.APIConfig) (bs *bonusServer, err error) {
 		Storage:              st,
 		AccuralSystemAddress: cfg.AccuralSystemAddress,
 	}
+	fmt.Println("Service config:", svCfg)
 	sv, err := service.NewBonusService(svCfg)
 	if err != nil {
 		return nil, err

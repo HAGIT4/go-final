@@ -102,7 +102,7 @@ func (sv *BonusService) getOrderListByUser(userId int) (orders []*pkgService.Ord
 		newOrder := pkgService.OrderInfo{
 			Number:     newNumber,
 			Status:     order.Status,
-			Accural:    newAccural,
+			Accrual:    newAccural,
 			UploadedAt: newTime,
 		}
 		orders = append(orders, &newOrder)

@@ -83,7 +83,7 @@ message GetOrderListRequest {
 message OrderInfo {
     string number = 1;
     string status = 2;
-    float accural = 3;
+    float accrual = 3;
     string uploaded_at = 4;
 }
 

@@ -32,13 +32,13 @@ func (st *BonusStorage) GetUserByUsername(req *modelStorage.GetUserByUsernameReq
 	}
 	defer sqlResult.Close()
 
-	var userId int64
+	var userID int64
 	for sqlResult.Next() {
-		if err = sqlResult.Scan(&userId, &resp.Username, &resp.PasswdHash); err != nil {
+		if err = sqlResult.Scan(&userID, &resp.Username, &resp.PasswdHash); err != nil {
 			return nil, err
 		}
 	}
-	if userId == 0 {
+	if userID == 0 {
 		resp = &modelStorage.GetUserByUsernameResponse{
 			Found: false,
 		}
@@ -59,9 +59,9 @@ func (st *BonusStorage) GetUserIDByUsername(req *modelStorage.GetUserIDByUsernam
 	}
 	defer sqlResult.Close()
 
-	var userId int
+	var userID int
 	for sqlResult.Next() {
-		if err = sqlResult.Scan(&userId); err != nil {
+		if err = sqlResult.Scan(&userID); err != nil {
 			return nil, err
 		}
 	}
@@ -71,14 +71,14 @@ func (st *BonusStorage) GetUserIDByUsername(req *modelStorage.GetUserIDByUsernam
 	}
 
 	resp = &modelStorage.GetUserIDByUsernameResponse{}
-	if userId == 0 {
+	if userID == 0 {
 		resp = &modelStorage.GetUserIDByUsernameResponse{
 			UserID: 0,
 			Found:  false,
 		}
 	} else {
 		resp = &modelStorage.GetUserIDByUsernameResponse{
-			UserID: userId,
+			UserID: userID,
 			Found:  true,
 		}
 	}

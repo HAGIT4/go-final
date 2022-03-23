@@ -1,5 +1,4 @@
 all:
-	echo "MAKE"
 	mkdir -p "pkg/service"
 	protoc \
 	-Iapi/proto \

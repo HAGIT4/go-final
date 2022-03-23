@@ -3,6 +3,7 @@ package router
 import (
 	routes "github.com/HAGIT4/go-final/internal/router/routes"
 	routerCfg "github.com/HAGIT4/go-final/pkg/router"
+	"github.com/gin-contrib/gzip"
 	gin "github.com/gin-gonic/gin"
 )
 
@@ -15,6 +16,7 @@ var _ BonusRouterInterface = (*bonusRouter)(nil)
 
 func NewBonusRouter(cfg *routerCfg.BonusRouterConfig) (r *bonusRouter, err error) {
 	mux := gin.Default()
+	mux.Use(gzip.Gzip(gzip.DefaultCompression))
 	apiUserGroup := mux.Group("api/user")
 	routes.AddUserRoutes(apiUserGroup, cfg.Service)
 	routes.AddOrdersRoutes(apiUserGroup, cfg.Service)

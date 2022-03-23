@@ -38,6 +38,7 @@ func (cl *accuralClient) GetOrderInfo(number int) (resp *GetOrderInfoResponse) {
 		resp.Action = "retry"
 		return resp
 	}
+	defer getResp.Body.Close()
 	switch getResp.StatusCode {
 	case 200:
 		body, err := io.ReadAll(getResp.Body)

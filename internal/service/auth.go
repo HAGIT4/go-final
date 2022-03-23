@@ -39,14 +39,14 @@ func (sv *BonusService) Register(req *pkgService.RegisterRequest) (resp *pkgServ
 		return resp
 	}
 
-	userId, found, err := sv.getUserIdByUsername(req.Login)
+	userID, found, err := sv.getUserIdByUsername(req.Login)
 	if err != nil || !found {
 		resp.Status = pkgService.RegisterResponse_INTERNAL_SERVEL_ERROR
 		return resp
 	}
 
 	dbAddBalanceReq := &modelStorage.AddUserBalanceRequest{
-		UserId: userId,
+		UserId: userID,
 	}
 	_, err = sv.storage.AddUserBalance(dbAddBalanceReq)
 	if err != nil {

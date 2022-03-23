@@ -7,7 +7,7 @@ import (
 	modelStorage "github.com/HAGIT4/go-final/pkg/storage/model"
 )
 
-func (st *BonusStorage) GetBalanceByUserId(req *modelStorage.GetBalanceByUserIdRequest) (resp *modelStorage.GetBalanceByUserIdResponse, err error) {
+func (st *BonusStorage) GetBalanceByUserID(req *modelStorage.GetBalanceByUserIdRequest) (resp *modelStorage.GetBalanceByUserIdResponse, err error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
@@ -40,7 +40,7 @@ func (st *BonusStorage) GetBalanceByUserId(req *modelStorage.GetBalanceByUserIdR
 	return resp, nil
 }
 
-func (st *BonusStorage) GetAllWithdrawalsByUserId(req *modelStorage.GetAllWithdrawalsByUserIdRequest) (resp *modelStorage.GetAllWithdrawalsByUserIdResponse, err error) {
+func (st *BonusStorage) GetAllWithdrawalsByUserID(req *modelStorage.GetAllWithdrawalsByUserIdRequest) (resp *modelStorage.GetAllWithdrawalsByUserIdResponse, err error) {
 	resp = &modelStorage.GetAllWithdrawalsByUserIdResponse{}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -79,7 +79,7 @@ func (st *BonusStorage) GetAllWithdrawalsByUserId(req *modelStorage.GetAllWithdr
 	return resp, nil
 }
 
-func (st *BonusStorage) SetUserBalanceByUserId(req *modelStorage.SetUserBalanceByUserIdRequest) (resp *modelStorage.SetUserBalanceByUserIdResponse, err error) {
+func (st *BonusStorage) SetUserBalanceByUserID(req *modelStorage.SetUserBalanceByUserIdRequest) (resp *modelStorage.SetUserBalanceByUserIdResponse, err error) {
 	resp = &modelStorage.SetUserBalanceByUserIdResponse{}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()

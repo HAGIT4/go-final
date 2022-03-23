@@ -21,7 +21,7 @@ func (st *BonusStorage) UploadOrder(req *modelStorage.UploadOrderRequest) (resp 
 	return resp, nil
 }
 
-func (st *BonusStorage) GetOrderByOrderId(req *modelStorage.GetOrderByOrderIdRequest) (resp *modelStorage.GetOrderByOrderIdResponse, err error) {
+func (st *BonusStorage) GetOrderByOrderID(req *modelStorage.GetOrderByOrderIdRequest) (resp *modelStorage.GetOrderByOrderIdResponse, err error) {
 	resp = &modelStorage.GetOrderByOrderIdResponse{}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()

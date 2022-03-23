@@ -24,7 +24,7 @@ type bonusServer struct {
 
 func NewBonusServer(cfg *pkgApi.APIConfig) (bs *bonusServer, err error) {
 	dbCfg := &pkgStorage.BonusStorageConfig{
-		ConnectionString: cfg.DatabaseUri,
+		ConnectionString: cfg.DatabaseURI,
 	}
 	st, err := storage.NewBonusStorage(dbCfg)
 	if err != nil {

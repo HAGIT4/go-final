@@ -5,14 +5,14 @@ import (
 )
 
 func (sv *BonusService) getUserIDByUsername(username string) (id int, found bool, err error) {
-	dbReq := &modelStorage.GetUserIdByUsernameRequest{
+	dbReq := &modelStorage.GetUserIDByUsernameRequest{
 		Username: username,
 	}
 	dbResp, err := sv.storage.GetUserIDByUsername(dbReq)
 	if err != nil {
 		return 0, false, err
 	}
-	return dbResp.UserId, dbResp.Found, nil
+	return dbResp.UserID, dbResp.Found, nil
 }
 
 func (sv *BonusService) getUserByUsername(username string) (user *modelStorage.User, found bool, err error) {

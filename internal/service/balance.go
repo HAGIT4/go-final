@@ -125,7 +125,7 @@ func (sv *BonusService) Withdraw(req *pkgService.WithdrawRequest) (resp *pkgServ
 
 func (sv *BonusService) AddWithdrawal(current float32, withdrawn float32, sum float32, userID int, orderID int) (err error) {
 	dbReq := &modelStorage.AddWithdrawalRequest{
-		UserId:      userID,
+		UserID:      userID,
 		Current:     int(current * 100),
 		Withdrawn:   int(withdrawn * 100),
 		Sum:         int(sum * 100),
@@ -139,7 +139,7 @@ func (sv *BonusService) AddWithdrawal(current float32, withdrawn float32, sum fl
 }
 
 func (sv *BonusService) getWithdrawalsByUserID(userID int) (witdrawalsList []*pkgService.Withdrawal, err error) {
-	dbReq := &modelStorage.GetAllWithdrawalsByUserIdRequest{
+	dbReq := &modelStorage.GetAllWithdrawalsByUserIDRequest{
 		UserID: userID,
 	}
 	dbResp, err := sv.storage.GetAllWithdrawalsByUserID(dbReq)
@@ -148,7 +148,7 @@ func (sv *BonusService) getWithdrawalsByUserID(userID int) (witdrawalsList []*pk
 	}
 	for _, dbWithdrawal := range dbResp.Withdrawals {
 		svWithdrawal := &pkgService.Withdrawal{
-			Order:       strconv.Itoa(dbWithdrawal.OrderId),
+			Order:       strconv.Itoa(dbWithdrawal.OrderID),
 			Sum:         float32(dbWithdrawal.Sum) / 100,
 			ProcessedAt: dbWithdrawal.ProcessedAt.String(),
 		}

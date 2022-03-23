@@ -40,8 +40,8 @@ func (st *BonusStorage) GetBalanceByUserID(req *modelStorage.GetBalanceByUserIDR
 	return resp, nil
 }
 
-func (st *BonusStorage) GetAllWithdrawalsByUserID(req *modelStorage.GetAllWithdrawalsByUserIdRequest) (resp *modelStorage.GetAllWithdrawalsByUserIdResponse, err error) {
-	resp = &modelStorage.GetAllWithdrawalsByUserIdResponse{}
+func (st *BonusStorage) GetAllWithdrawalsByUserID(req *modelStorage.GetAllWithdrawalsByUserIDRequest) (resp *modelStorage.GetAllWithdrawalsByUserIDResponse, err error) {
+	resp = &modelStorage.GetAllWithdrawalsByUserIDResponse{}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
@@ -64,7 +64,7 @@ func (st *BonusStorage) GetAllWithdrawalsByUserID(req *modelStorage.GetAllWithdr
 			return nil, err
 		}
 		withdrawal := modelStorage.Withdrawal{
-			OrderId:     orderId,
+			OrderID:     orderId,
 			Sum:         sum,
 			UserID:      userId,
 			ProcessedAt: processedAt,
@@ -79,8 +79,8 @@ func (st *BonusStorage) GetAllWithdrawalsByUserID(req *modelStorage.GetAllWithdr
 	return resp, nil
 }
 
-func (st *BonusStorage) SetUserBalanceByUserID(req *modelStorage.SetUserBalanceByUserIdRequest) (resp *modelStorage.SetUserBalanceByUserIdResponse, err error) {
-	resp = &modelStorage.SetUserBalanceByUserIdResponse{}
+func (st *BonusStorage) SetUserBalanceByUserID(req *modelStorage.SetUserBalanceByUserIDRequest) (resp *modelStorage.SetUserBalanceByUserIDResponse, err error) {
+	resp = &modelStorage.SetUserBalanceByUserIDResponse{}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
@@ -104,14 +104,14 @@ func (st *BonusStorage) AddWithdrawal(req *modelStorage.AddWithdrawalRequest) (r
 	defer tx.Rollback(ctx)
 
 	sqlStmtBalance := `UPDATE bonus.balance SET current=$1, withdrawn=$2 WHERE user_id=$3`
-	_, err = tx.Exec(ctx, sqlStmtBalance, req.Current, req.Withdrawn, req.UserId)
+	_, err = tx.Exec(ctx, sqlStmtBalance, req.Current, req.Withdrawn, req.UserID)
 	if err != nil {
 		return nil, err
 	}
 
 	sqlStmtWithdrawal := `INSERT INTO bonus.withdrawal (order_id, sum, user_id, processed_at)
 		VALUES ($1, $2, $3, $4)`
-	_, err = tx.Exec(ctx, sqlStmtWithdrawal, req.OrderId, req.Sum, req.OrderId, req.ProcessedAt)
+	_, err = tx.Exec(ctx, sqlStmtWithdrawal, req.OrderID, req.Sum, req.OrderID, req.ProcessedAt)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +129,7 @@ func (st *BonusStorage) AddUserBalance(req *modelStorage.AddUserBalanceRequest) 
 	defer cancel()
 
 	sqlStmt := `INSERT INTO bonus.balance (user_id, current, withdrawn) VALUES ($1, 0, 0)`
-	_, err = st.connection.Exec(ctx, sqlStmt, req.UserId)
+	_, err = st.connection.Exec(ctx, sqlStmt, req.UserID)
 	if err != nil {
 		return nil, err
 	}

@@ -16,36 +16,36 @@ type GetBalanceByUserIDResponse struct {
 	Found bool
 }
 
-type GetAllWithdrawalsByUserIdRequest struct {
+type GetAllWithdrawalsByUserIDRequest struct {
 	UserID int
 }
 
 type Withdrawal struct {
-	OrderId     int
+	OrderID     int
 	Sum         int
 	UserID      int
 	ProcessedAt time.Time
 }
 
-type GetAllWithdrawalsByUserIdResponse struct {
+type GetAllWithdrawalsByUserIDResponse struct {
 	Withdrawals []Withdrawal
 }
 
-type SetUserBalanceByUserIdRequest struct {
+type SetUserBalanceByUserIDRequest struct {
 	UserID    int
 	Current   int
 	Withdrawn int
 }
 
-type SetUserBalanceByUserIdResponse struct {
+type SetUserBalanceByUserIDResponse struct {
 }
 
 type AddWithdrawalRequest struct {
-	UserId      int
+	UserID      int
 	Current     int
 	Withdrawn   int
 	Sum         int
-	OrderId     int
+	OrderID     int
 	ProcessedAt time.Time
 }
 

@@ -49,7 +49,7 @@ func (st *BonusStorage) GetUserByUsername(req *modelStorage.GetUserByUsernameReq
 	return resp, nil
 }
 
-func (st *BonusStorage) GetUserIDByUsername(req *modelStorage.GetUserIdByUsernameRequest) (resp *modelStorage.GetUserIdByUsernameResponse, err error) {
+func (st *BonusStorage) GetUserIDByUsername(req *modelStorage.GetUserIDByUsernameRequest) (resp *modelStorage.GetUserIDByUsernameResponse, err error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
@@ -70,15 +70,15 @@ func (st *BonusStorage) GetUserIDByUsername(req *modelStorage.GetUserIdByUsernam
 		return nil, err
 	}
 
-	resp = &modelStorage.GetUserIdByUsernameResponse{}
+	resp = &modelStorage.GetUserIDByUsernameResponse{}
 	if userId == 0 {
-		resp = &modelStorage.GetUserIdByUsernameResponse{
-			UserId: 0,
+		resp = &modelStorage.GetUserIDByUsernameResponse{
+			UserID: 0,
 			Found:  false,
 		}
 	} else {
-		resp = &modelStorage.GetUserIdByUsernameResponse{
-			UserId: userId,
+		resp = &modelStorage.GetUserIDByUsernameResponse{
+			UserID: userId,
 			Found:  true,
 		}
 	}

@@ -13,7 +13,7 @@ type BonusStorageInterface interface {
 	UploadOrder(req *modelStorage.UploadOrderRequest) (resp *modelStorage.UploadOrderResponse, err error)
 	GetOrderByOrderID(req *modelStorage.GetOrderByOrderIDRequest) (resp *modelStorage.GetOrderByOrderIDResponse, err error)
 	GetAllOrdersFromUser(req *modelStorage.GetAllOrdersFromUserRequest) (resp *modelStorage.GetAllOrdersFromUserResponse, err error)
-	GetAllWithdrawalsByUserID(req *modelStorage.GetAllWithdrawalsByUserIdRequest) (resp *modelStorage.GetAllWithdrawalsByUserIdResponse, err error)
+	GetAllWithdrawalsByUserID(req *modelStorage.GetAllWithdrawalsByUserIDRequest) (resp *modelStorage.GetAllWithdrawalsByUserIDResponse, err error)
 	AddWithdrawal(req *modelStorage.AddWithdrawalRequest) (resp *modelStorage.AddWithdrawalResponse, err error)
 	GetOrdersForProcess(req *modelStorage.GetOrdersForProcessRequest) (resp *modelStorage.GetOrdersForProcessResponse, err error)
 	MarkNewWithProcessing(req *modelStorage.MarkNewWithProcessingRequest) (resp *modelStorage.MarkNewWithProcessingResponse, err error)

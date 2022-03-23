@@ -90,7 +90,7 @@ func (sv *BonusService) processOrder(orderToProcess *modelStorage.ProcessedOrder
 		Accural: resp.Accural,
 		Status:  resp.Status,
 		Action:  resp.Action,
-		UserID:  orderToProcess.UserId,
+		UserID:  orderToProcess.UserID,
 	}
 	return orderToWrite
 }

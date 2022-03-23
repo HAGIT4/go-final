@@ -7,23 +7,23 @@ type Balance struct {
 	Withdrawn int
 }
 
-type GetBalanceByUserIdRequest struct {
+type GetBalanceByUserIDRequest struct {
 	UserID int
 }
 
-type GetBalanceByUserIdResponse struct {
+type GetBalanceByUserIDResponse struct {
 	Balance
 	Found bool
 }
 
 type GetAllWithdrawalsByUserIdRequest struct {
-	UserId int
+	UserID int
 }
 
 type Withdrawal struct {
 	OrderId     int
 	Sum         int
-	UserId      int
+	UserID      int
 	ProcessedAt time.Time
 }
 
@@ -32,7 +32,7 @@ type GetAllWithdrawalsByUserIdResponse struct {
 }
 
 type SetUserBalanceByUserIdRequest struct {
-	UserId    int
+	UserID    int
 	Current   int
 	Withdrawn int
 }

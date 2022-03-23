@@ -140,7 +140,7 @@ func (sv *BonusService) AddWithdrawal(current float32, withdrawn float32, sum fl
 
 func (sv *BonusService) getWithdrawalsByUserID(userID int) (witdrawalsList []*pkgService.Withdrawal, err error) {
 	dbReq := &modelStorage.GetAllWithdrawalsByUserIdRequest{
-		UserId: userID,
+		UserID: userID,
 	}
 	dbResp, err := sv.storage.GetAllWithdrawalsByUserID(dbReq)
 	if err != nil {
@@ -158,7 +158,7 @@ func (sv *BonusService) getWithdrawalsByUserID(userID int) (witdrawalsList []*pk
 }
 
 func (sv *BonusService) getBalanceByUserID(userID int) (current float32, withdrawn float32, found bool, err error) {
-	dbReq := &modelStorage.GetBalanceByUserIdRequest{
+	dbReq := &modelStorage.GetBalanceByUserIDRequest{
 		UserID: userID,
 	}
 	dbResp, err := sv.storage.GetBalanceByUserID(dbReq)

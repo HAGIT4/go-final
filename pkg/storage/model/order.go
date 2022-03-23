@@ -8,24 +8,24 @@ type UploadOrderRequest struct {
 	Number     int
 	Status     string
 	Accural    int
-	UserId     int
+	UserID     int
 	UploadedAt time.Time
 }
 
 type UploadOrderResponse struct{}
 
-type GetOrderByOrderIdRequest struct {
-	OrderId int64
+type GetOrderByOrderIDRequest struct {
+	OrderID int64
 }
 
-type GetOrderByOrderIdResponse struct {
-	UserId     int
+type GetOrderByOrderIDResponse struct {
+	UserID     int
 	Status     string
 	UploadedAt time.Time
 }
 
 type GetAllOrdersFromUserRequest struct {
-	UserId int
+	UserID int
 }
 
 type Order struct {
@@ -44,7 +44,7 @@ type GetOrdersForProcessRequest struct {
 
 type ProcessedOrder struct {
 	Number int
-	UserId int
+	UserID int
 }
 
 type GetOrdersForProcessResponse struct {

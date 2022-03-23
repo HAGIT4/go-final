@@ -7,7 +7,7 @@ import (
 	modelStorage "github.com/HAGIT4/go-final/pkg/storage/model"
 )
 
-func (st *BonusStorage) GetBalanceByUserID(req *modelStorage.GetBalanceByUserIdRequest) (resp *modelStorage.GetBalanceByUserIdResponse, err error) {
+func (st *BonusStorage) GetBalanceByUserID(req *modelStorage.GetBalanceByUserIDRequest) (resp *modelStorage.GetBalanceByUserIDResponse, err error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
@@ -30,7 +30,7 @@ func (st *BonusStorage) GetBalanceByUserID(req *modelStorage.GetBalanceByUserIdR
 		return nil, err
 	}
 
-	resp = &modelStorage.GetBalanceByUserIdResponse{
+	resp = &modelStorage.GetBalanceByUserIDResponse{
 		Balance: modelStorage.Balance{
 			Current:   current,
 			Withdrawn: withdrawn,
@@ -47,7 +47,7 @@ func (st *BonusStorage) GetAllWithdrawalsByUserID(req *modelStorage.GetAllWithdr
 
 	sqlStmt := `SELECT order_id, sum, user_id, processed_at FROM bonus.withdrawal WHERE user_id=$1
 		ORDER BY processed_at ASC`
-	sqlResult, err := st.connection.Query(ctx, sqlStmt, req.UserId)
+	sqlResult, err := st.connection.Query(ctx, sqlStmt, req.UserID)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (st *BonusStorage) GetAllWithdrawalsByUserID(req *modelStorage.GetAllWithdr
 		withdrawal := modelStorage.Withdrawal{
 			OrderId:     orderId,
 			Sum:         sum,
-			UserId:      userId,
+			UserID:      userId,
 			ProcessedAt: processedAt,
 		}
 		withdrawals = append(withdrawals, withdrawal)
@@ -85,7 +85,7 @@ func (st *BonusStorage) SetUserBalanceByUserID(req *modelStorage.SetUserBalanceB
 	defer cancel()
 
 	sqlStmt := `UPDATE bonus.balance SET current=$1, withdrawn=$2 WHERE user_id=$3`
-	_, err = st.connection.Exec(ctx, sqlStmt, req.Current, req.Withdrawn, req.UserId)
+	_, err = st.connection.Exec(ctx, sqlStmt, req.Current, req.Withdrawn, req.UserID)
 	if err != nil {
 		return nil, err
 	}

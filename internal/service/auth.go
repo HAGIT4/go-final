@@ -39,7 +39,7 @@ func (sv *BonusService) Register(req *pkgService.RegisterRequest) (resp *pkgServ
 		return resp
 	}
 
-	userID, found, err := sv.getUserIdByUsername(req.Login)
+	userID, found, err := sv.getUserIDByUsername(req.Login)
 	if err != nil || !found {
 		resp.Status = pkgService.RegisterResponse_INTERNAL_SERVEL_ERROR
 		return resp

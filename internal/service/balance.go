@@ -11,7 +11,7 @@ import (
 func (sv *BonusService) GetUserBalance(req *pkgService.GetUserBalanceRequest) (resp *pkgService.GetUserBalanceResponse) {
 	resp = &pkgService.GetUserBalanceResponse{}
 	username := req.GetUsername()
-	userID, found, err := sv.getUserIdByUsername(username)
+	userID, found, err := sv.getUserIDByUsername(username)
 	if err != nil {
 		resp.Status = pkgService.GetUserBalanceResponse_INTERNAL_SERVER_ERROR
 		return resp
@@ -57,7 +57,7 @@ func (sv *BonusService) addSumToUserBalance(userID int, accrual float32) (err er
 func (sv *BonusService) GetUserWithdrawals(req *pkgService.GetAllWithdrawalsByUserRequest) (resp *pkgService.GetAllWithdrawalsByUserResponse) {
 	resp = &pkgService.GetAllWithdrawalsByUserResponse{}
 	username := req.Username
-	userID, found, err := sv.getUserIdByUsername(username)
+	userID, found, err := sv.getUserIDByUsername(username)
 	if err != nil {
 		resp.Status = pkgService.GetAllWithdrawalsByUserResponse_INTERNAL_SERVER_ERROR
 		return resp
@@ -83,7 +83,7 @@ func (sv *BonusService) GetUserWithdrawals(req *pkgService.GetAllWithdrawalsByUs
 func (sv *BonusService) Withdraw(req *pkgService.WithdrawRequest) (resp *pkgService.WithdrawResponse) {
 	resp = &pkgService.WithdrawResponse{}
 	username := req.Username
-	userID, found, err := sv.getUserIdByUsername(username)
+	userID, found, err := sv.getUserIDByUsername(username)
 	if err != nil {
 		resp.Status = pkgService.WithdrawResponse_INTERNAL_SERVER_ERROR
 		return resp
@@ -123,7 +123,7 @@ func (sv *BonusService) Withdraw(req *pkgService.WithdrawRequest) (resp *pkgServ
 	}
 }
 
-func (sv *BonusService) AddWithdrawal(current float32, withdrawn float32, sum float32, userID int, orderId int) (err error) {
+func (sv *BonusService) AddWithdrawal(current float32, withdrawn float32, sum float32, userID int, orderID int) (err error) {
 	dbReq := &modelStorage.AddWithdrawalRequest{
 		UserId:      userID,
 		Current:     int(current * 100),
@@ -157,9 +157,9 @@ func (sv *BonusService) getWithdrawalsByUserID(userID int) (witdrawalsList []*pk
 	return witdrawalsList, nil
 }
 
-func (sv *BonusService) getBalanceByUserID(userId int) (current float32, withdrawn float32, found bool, err error) {
+func (sv *BonusService) getBalanceByUserID(userID int) (current float32, withdrawn float32, found bool, err error) {
 	dbReq := &modelStorage.GetBalanceByUserIdRequest{
-		UserID: userId,
+		UserID: userID,
 	}
 	dbResp, err := sv.storage.GetBalanceByUserID(dbReq)
 	if err != nil {

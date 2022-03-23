@@ -49,7 +49,7 @@ func (st *BonusStorage) GetUserByUsername(req *modelStorage.GetUserByUsernameReq
 	return resp, nil
 }
 
-func (st *BonusStorage) GetUserIdByUsername(req *modelStorage.GetUserIdByUsernameRequest) (resp *modelStorage.GetUserIdByUsernameResponse, err error) {
+func (st *BonusStorage) GetUserIDByUsername(req *modelStorage.GetUserIdByUsernameRequest) (resp *modelStorage.GetUserIdByUsernameResponse, err error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 

@@ -20,7 +20,7 @@ func (sv *BonusService) UploadOrder(req *pkgService.UploadOrderRequest) (resp *p
 		return resp
 	}
 
-	userId, userFound, err := sv.getUserIdByUsername(req.Username)
+	userId, userFound, err := sv.getUserIDByUsername(req.Username)
 	if err != nil {
 		resp.Status = pkgService.UploadOrderResponse_INTERNAL_SERVER_ERROR
 		return resp
@@ -30,13 +30,13 @@ func (sv *BonusService) UploadOrder(req *pkgService.UploadOrderRequest) (resp *p
 		return resp
 	}
 
-	ordersUserId, orderFound, err := sv.getOrderByOrderId(req.Order)
+	ordersUserID, orderFound, err := sv.getOrderByOrderID(req.Order)
 	if err != nil {
 		resp.Status = pkgService.UploadOrderResponse_INTERNAL_SERVER_ERROR
 		return resp
 	}
 	if orderFound {
-		if ordersUserId != userId {
+		if ordersUserID != userId {
 			resp.Status = pkgService.UploadOrderResponse_ALREADY_UPLOADED_BY_ANOTHER_USER
 			return resp
 		} else {
@@ -63,7 +63,7 @@ func (sv *BonusService) UploadOrder(req *pkgService.UploadOrderRequest) (resp *p
 
 func (sv *BonusService) GetAllOrdersFromUser(req *pkgService.GetOrderListRequest) (resp *pkgService.GetOrderListResponse) {
 	resp = &pkgService.GetOrderListResponse{}
-	userId, userFound, err := sv.getUserIdByUsername(req.Username)
+	userID, userFound, err := sv.getUserIDByUsername(req.Username)
 	if err != nil {
 		resp.Status = pkgService.GetOrderListResponse_INTERNAL_SERVER_ERROR
 		return resp
@@ -73,7 +73,7 @@ func (sv *BonusService) GetAllOrdersFromUser(req *pkgService.GetOrderListRequest
 		return resp
 	}
 
-	orders, err := sv.getOrderListByUser(userId)
+	orders, err := sv.getOrderListByUser(userID)
 	if err != nil {
 		resp.Status = pkgService.GetOrderListResponse_INTERNAL_SERVER_ERROR
 		return resp
@@ -88,9 +88,9 @@ func (sv *BonusService) GetAllOrdersFromUser(req *pkgService.GetOrderListRequest
 	return resp
 }
 
-func (sv *BonusService) getOrderListByUser(userId int) (orders []*pkgService.OrderInfo, err error) {
+func (sv *BonusService) getOrderListByUser(userID int) (orders []*pkgService.OrderInfo, err error) {
 	dbReq := &modelStorage.GetAllOrdersFromUserRequest{
-		UserId: userId,
+		UserId: userID,
 	}
 	dbResp, err := sv.storage.GetAllOrdersFromUser(dbReq)
 	if err != nil {
@@ -112,9 +112,9 @@ func (sv *BonusService) getOrderListByUser(userId int) (orders []*pkgService.Ord
 	return orders, nil
 }
 
-func (sv *BonusService) getOrderByOrderId(orderId int64) (ordersUserId int, orderFound bool, err error) {
+func (sv *BonusService) getOrderByOrderID(orderID int64) (ordersUserId int, orderFound bool, err error) {
 	dbReq := &modelStorage.GetOrderByOrderIdRequest{
-		OrderId: int64(orderId),
+		OrderId: int64(orderID),
 	}
 	dbResp, err := sv.storage.GetOrderByOrderID(dbReq)
 	if err != nil {

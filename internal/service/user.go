@@ -4,11 +4,11 @@ import (
 	modelStorage "github.com/HAGIT4/go-final/pkg/storage/model"
 )
 
-func (sv *BonusService) getUserIdByUsername(username string) (id int, found bool, err error) {
+func (sv *BonusService) getUserIDByUsername(username string) (id int, found bool, err error) {
 	dbReq := &modelStorage.GetUserIdByUsernameRequest{
 		Username: username,
 	}
-	dbResp, err := sv.storage.GetUserIdByUsername(dbReq)
+	dbResp, err := sv.storage.GetUserIDByUsername(dbReq)
 	if err != nil {
 		return 0, false, err
 	}

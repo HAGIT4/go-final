@@ -34,10 +34,10 @@ func (st *BonusStorage) GetOrderByOrderID(req *modelStorage.GetOrderByOrderIDReq
 	defer sqlResult.Close()
 
 	var status string
-	var userId int
+	var userID int
 	var uploadedAt time.Time
 	for sqlResult.Next() {
-		if err = sqlResult.Scan(&status, &userId, &uploadedAt); err != nil {
+		if err = sqlResult.Scan(&status, &userID, &uploadedAt); err != nil {
 			return nil, err
 		}
 	}
@@ -47,7 +47,7 @@ func (st *BonusStorage) GetOrderByOrderID(req *modelStorage.GetOrderByOrderIDReq
 	}
 
 	resp = &modelStorage.GetOrderByOrderIDResponse{
-		UserID:     userId,
+		UserID:     userID,
 		Status:     status,
 		UploadedAt: uploadedAt,
 	}
@@ -106,13 +106,13 @@ func (st *BonusStorage) GetOrdersForProcess(req *modelStorage.GetOrdersForProces
 
 	var orders []modelStorage.ProcessedOrder
 	for sqlResult.Next() {
-		var orderNumber, orderUserId int
-		if err = sqlResult.Scan(&orderNumber, &orderUserId); err != nil {
+		var orderNumber, orderUserID int
+		if err = sqlResult.Scan(&orderNumber, &orderUserID); err != nil {
 			return nil, err
 		}
 		order := modelStorage.ProcessedOrder{
 			Number: orderNumber,
-			UserID: orderUserId,
+			UserID: orderUserID,
 		}
 		orders = append(orders, order)
 	}

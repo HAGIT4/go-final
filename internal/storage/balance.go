@@ -53,20 +53,20 @@ func (st *BonusStorage) GetAllWithdrawalsByUserID(req *modelStorage.GetAllWithdr
 	}
 	defer sqlResult.Close()
 
-	var orderId int
+	var orderID int
 	var sum int
-	var userId int
+	var userID int
 	var processedAt time.Time
 
 	var withdrawals []modelStorage.Withdrawal
 	for sqlResult.Next() {
-		if err = sqlResult.Scan(&orderId, &sum, &userId, &processedAt); err != nil {
+		if err = sqlResult.Scan(&orderID, &sum, &userID, &processedAt); err != nil {
 			return nil, err
 		}
 		withdrawal := modelStorage.Withdrawal{
-			OrderID:     orderId,
+			OrderID:     orderID,
 			Sum:         sum,
-			UserID:      userId,
+			UserID:      userID,
 			ProcessedAt: processedAt,
 		}
 		withdrawals = append(withdrawals, withdrawal)

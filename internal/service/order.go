@@ -20,7 +20,7 @@ func (sv *BonusService) UploadOrder(req *pkgService.UploadOrderRequest) (resp *p
 		return resp
 	}
 
-	userId, userFound, err := sv.getUserIDByUsername(req.Username)
+	userID, userFound, err := sv.getUserIDByUsername(req.Username)
 	if err != nil {
 		resp.Status = pkgService.UploadOrderResponse_INTERNAL_SERVER_ERROR
 		return resp
@@ -36,7 +36,7 @@ func (sv *BonusService) UploadOrder(req *pkgService.UploadOrderRequest) (resp *p
 		return resp
 	}
 	if orderFound {
-		if ordersUserID != userId {
+		if ordersUserID != userID {
 			resp.Status = pkgService.UploadOrderResponse_ALREADY_UPLOADED_BY_ANOTHER_USER
 			return resp
 		} else {
@@ -49,7 +49,7 @@ func (sv *BonusService) UploadOrder(req *pkgService.UploadOrderRequest) (resp *p
 		Number:     int(req.Order),
 		Status:     "NEW",
 		Accural:    0,
-		UserID:     userId,
+		UserID:     userID,
 		UploadedAt: time.Now(),
 	}
 	_, err = sv.storage.UploadOrder(dbReq)
@@ -112,7 +112,7 @@ func (sv *BonusService) getOrderListByUser(userID int) (orders []*pkgService.Ord
 	return orders, nil
 }
 
-func (sv *BonusService) getOrderByOrderID(orderID int64) (ordersUserId int, orderFound bool, err error) {
+func (sv *BonusService) getOrderByOrderID(orderID int64) (ordersUserID int, orderFound bool, err error) {
 	dbReq := &modelStorage.GetOrderByOrderIDRequest{
 		OrderID: int64(orderID),
 	}

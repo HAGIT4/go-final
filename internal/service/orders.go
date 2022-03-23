@@ -49,7 +49,7 @@ func (sv *BonusService) UploadOrder(req *pkgService.UploadOrderRequest) (resp *p
 		Number:     int(req.Order),
 		Status:     "NEW",
 		Accural:    0,
-		UserId:     userId,
+		UserID:     userId,
 		UploadedAt: time.Now(),
 	}
 	_, err = sv.storage.UploadOrder(dbReq)
@@ -90,7 +90,7 @@ func (sv *BonusService) GetAllOrdersFromUser(req *pkgService.GetOrderListRequest
 
 func (sv *BonusService) getOrderListByUser(userID int) (orders []*pkgService.OrderInfo, err error) {
 	dbReq := &modelStorage.GetAllOrdersFromUserRequest{
-		UserId: userID,
+		UserID: userID,
 	}
 	dbResp, err := sv.storage.GetAllOrdersFromUser(dbReq)
 	if err != nil {
@@ -113,18 +113,18 @@ func (sv *BonusService) getOrderListByUser(userID int) (orders []*pkgService.Ord
 }
 
 func (sv *BonusService) getOrderByOrderID(orderID int64) (ordersUserId int, orderFound bool, err error) {
-	dbReq := &modelStorage.GetOrderByOrderIdRequest{
-		OrderId: int64(orderID),
+	dbReq := &modelStorage.GetOrderByOrderIDRequest{
+		OrderID: int64(orderID),
 	}
 	dbResp, err := sv.storage.GetOrderByOrderID(dbReq)
 	if err != nil {
 		return 0, false, err
 	}
-	if dbResp.UserId != 0 {
+	if dbResp.UserID != 0 {
 		orderFound = true
 	} else {
 		orderFound = false
 	}
-	return dbResp.UserId, orderFound, nil
+	return dbResp.UserID, orderFound, nil
 
 }

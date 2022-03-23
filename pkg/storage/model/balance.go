@@ -53,7 +53,7 @@ type AddWithdrawalResponse struct {
 }
 
 type AddUserBalanceRequest struct {
-	UserId int
+	UserID int
 }
 
 type AddUserBalanceResponse struct {

@@ -8,7 +8,7 @@ type BonusStorageInterface interface {
 	AddUser(req *modelStorage.AddUserRequest) (err error)
 	AddUserBalance(req *modelStorage.AddUserBalanceRequest) (resp *modelStorage.AddUserBalanceResponse, err error)
 	GetUserByUsername(req *modelStorage.GetUserByUsernameRequest) (resp *modelStorage.GetUserByUsernameResponse, err error)
-	GetUserIDByUsername(req *modelStorage.GetUserIdByUsernameRequest) (resp *modelStorage.GetUserIdByUsernameResponse, err error)
+	GetUserIDByUsername(req *modelStorage.GetUserIDByUsernameRequest) (resp *modelStorage.GetUserIDByUsernameResponse, err error)
 	GetBalanceByUserID(req *modelStorage.GetBalanceByUserIDRequest) (resp *modelStorage.GetBalanceByUserIDResponse, err error)
 	UploadOrder(req *modelStorage.UploadOrderRequest) (resp *modelStorage.UploadOrderResponse, err error)
 	GetOrderByOrderID(req *modelStorage.GetOrderByOrderIDRequest) (resp *modelStorage.GetOrderByOrderIDResponse, err error)

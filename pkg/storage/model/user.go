@@ -18,11 +18,11 @@ type GetUserByUsernameResponse struct {
 	Found bool
 }
 
-type GetUserIdByUsernameRequest struct {
+type GetUserIDByUsernameRequest struct {
 	Username string
 }
 
-type GetUserIdByUsernameResponse struct {
-	UserId int
+type GetUserIDByUsernameResponse struct {
+	UserID int
 	Found  bool
 }

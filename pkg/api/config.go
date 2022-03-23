@@ -9,12 +9,12 @@ import (
 
 type APIConfig struct {
 	RunAddress           string `env:"RUN_ADDRESS"`
-	DatabaseUri          string `env:"DATABASE_URI"`
+	DatabaseURI          string `env:"DATABASE_URI"`
 	AccuralSystemAddress string `env:"ACCRUAL_SYSTEM_ADDRESS"`
 }
 
 func (cfg *APIConfig) Validate() (err error) {
-	if cfg.RunAddress == "" || cfg.DatabaseUri == "" || cfg.AccuralSystemAddress == "" {
+	if cfg.RunAddress == "" || cfg.DatabaseURI == "" || cfg.AccuralSystemAddress == "" {
 		return errors.New("invalid config")
 	}
 	return nil
@@ -22,13 +22,13 @@ func (cfg *APIConfig) Validate() (err error) {
 
 var (
 	runAddressFlag           *string
-	databaseUriFlag          *string
+	databaseURIFlag          *string
 	accuralSystemAddressFlag *string
 )
 
 func InitConfig() (cfg *APIConfig, err error) {
 	runAddressFlag = flag.String("a", "", "Server address:port")
-	databaseUriFlag = flag.String("d", "", "Database URI")
+	databaseURIFlag = flag.String("d", "", "Database URI")
 	accuralSystemAddressFlag = flag.String("r", "", "Accrual system address")
 	flag.Parse()
 
@@ -40,8 +40,8 @@ func InitConfig() (cfg *APIConfig, err error) {
 	if len(cfg.RunAddress) == 0 {
 		cfg.RunAddress = *runAddressFlag
 	}
-	if len(cfg.DatabaseUri) == 0 {
-		cfg.DatabaseUri = *databaseUriFlag
+	if len(cfg.DatabaseURI) == 0 {
+		cfg.DatabaseURI = *databaseURIFlag
 	}
 	if len(cfg.AccuralSystemAddress) == 0 {
 		cfg.AccuralSystemAddress = *accuralSystemAddressFlag

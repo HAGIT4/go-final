@@ -46,7 +46,7 @@ func (sv *BonusService) Register(req *pkgService.RegisterRequest) (resp *pkgServ
 	}
 
 	dbAddBalanceReq := &modelStorage.AddUserBalanceRequest{
-		UserId: userID,
+		UserID: userID,
 	}
 	_, err = sv.storage.AddUserBalance(dbAddBalanceReq)
 	if err != nil {

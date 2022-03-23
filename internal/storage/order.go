@@ -14,20 +14,20 @@ func (st *BonusStorage) UploadOrder(req *modelStorage.UploadOrderRequest) (resp 
 
 	sqlStmt := `INSERT INTO bonus.order(number, status, accural, user_id, uploaded_at) VALUES (
 		$1, $2, $3, $4, $5)`
-	_, err = st.connection.Exec(ctx, sqlStmt, req.Number, req.Status, req.Accural, req.UserId, req.UploadedAt)
+	_, err = st.connection.Exec(ctx, sqlStmt, req.Number, req.Status, req.Accural, req.UserID, req.UploadedAt)
 	if err != nil {
 		return nil, err
 	}
 	return resp, nil
 }
 
-func (st *BonusStorage) GetOrderByOrderID(req *modelStorage.GetOrderByOrderIdRequest) (resp *modelStorage.GetOrderByOrderIdResponse, err error) {
-	resp = &modelStorage.GetOrderByOrderIdResponse{}
+func (st *BonusStorage) GetOrderByOrderID(req *modelStorage.GetOrderByOrderIDRequest) (resp *modelStorage.GetOrderByOrderIDResponse, err error) {
+	resp = &modelStorage.GetOrderByOrderIDResponse{}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	sqlStmt := `SELECT status, user_id, uploaded_at FROM bonus.order WHERE number=$1`
-	sqlResult, err := st.connection.Query(ctx, sqlStmt, req.OrderId)
+	sqlResult, err := st.connection.Query(ctx, sqlStmt, req.OrderID)
 	if err != nil {
 		return nil, err
 	}
@@ -46,8 +46,8 @@ func (st *BonusStorage) GetOrderByOrderID(req *modelStorage.GetOrderByOrderIdReq
 		return nil, err
 	}
 
-	resp = &modelStorage.GetOrderByOrderIdResponse{
-		UserId:     userId,
+	resp = &modelStorage.GetOrderByOrderIDResponse{
+		UserID:     userId,
 		Status:     status,
 		UploadedAt: uploadedAt,
 	}
@@ -61,7 +61,7 @@ func (st *BonusStorage) GetAllOrdersFromUser(req *modelStorage.GetAllOrdersFromU
 
 	sqlStmt := `SELECT number, status, accural, uploaded_at FROM bonus.order WHERE user_id=$1
 		ORDER BY uploaded_at ASC`
-	sqlResult, err := st.connection.Query(ctx, sqlStmt, req.UserId)
+	sqlResult, err := st.connection.Query(ctx, sqlStmt, req.UserID)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (st *BonusStorage) GetOrdersForProcess(req *modelStorage.GetOrdersForProces
 		}
 		order := modelStorage.ProcessedOrder{
 			Number: orderNumber,
-			UserId: orderUserId,
+			UserID: orderUserId,
 		}
 		orders = append(orders, order)
 	}
